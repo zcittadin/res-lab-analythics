@@ -53,8 +53,9 @@ public class ScreensController extends StackPane {
 		}
 	}
 
-	//Carrega o arquivo fxml e a respectiva tela para a coleção recebendo a instância
-	//de seu controller para ser setado manualmente
+	// Carrega o arquivo fxml e a respectiva tela para a coleção recebendo a
+	// instância
+	// de seu controller para ser setado manualmente
 	public boolean loadScreenAndController(String name, String resource, ControlledScreen controller) {
 		try {
 			FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));

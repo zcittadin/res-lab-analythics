@@ -39,7 +39,7 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 	public static String screen3ID = "screen3";
 	public static String screen3File = "/com/servicos/estatica/resicolor/lab/app/Screen3.fxml";
 	public static String screenConsultaID = "Consulta";
-	public static String screenConsultaFile = "/com/servicos/estatica/resicolor/lab/app/Consulta.fxml";
+	public static String screenConsultaFile = "/com/servicos/estatica/resicolor/lab/analythics/app/Consulta.fxml";
 
 	@FXML
 	private AnchorPane mainPane;
@@ -75,8 +75,9 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 		imgExitResizer.setLayoutY(633);
 		mainPane.getChildren().addAll(imgClienteResizer, imgExitResizer);
 
-		CurrentScreenProperty.setScreen(screenInicialID);
-		mainContainer.setScreen(screenInicialID);
+		mainContainer.loadScreen(screenConsultaID, screenConsultaFile);
+		CurrentScreenProperty.setScreen(screenConsultaID);
+		mainContainer.setScreen(screenConsultaID);
 		centralPane.getChildren().addAll(mainContainer);
 
 	}
@@ -111,7 +112,8 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 		Stage stage;
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/ClienteInfo.fxml"));
+		root = FXMLLoader
+				.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/ClienteInfo.fxml"));
 		stage.setScene(new Scene(root));
 		stage.setTitle("Informações sobre o cliente");
 		stage.initModality(Modality.APPLICATION_MODAL);
