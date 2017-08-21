@@ -1,12 +1,12 @@
-package com.servicos.estatica.resicolorlab.analythics.controller;
+package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.servicos.estatica.resicolorlab.analythics.property.CurrentScreenProperty;
-import com.servicos.estatica.resicolorlab.analythics.util.EstaticaInfoUtil;
+import com.servicos.estatica.resicolor.lab.analythics.property.CurrentScreenProperty;
+import com.servicos.estatica.resicolor.lab.analythics.util.EstaticaInfoUtil;
 
 import eu.hansolo.medusa.Clock;
 import javafx.application.Platform;
@@ -66,7 +66,7 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 
 		rectClock.setFill(Color.TRANSPARENT);
 
-		imgCliente.setImage(new Image("/com/servicos/estatica/resicolor/lab/style/resicolor.png"));
+		imgCliente.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/resicolor.png"));
 		imgClienteResizer = new ImageViewResizer(imgCliente, 126, 70);
 		imgClienteResizer.setLayoutX(16);
 		imgClienteResizer.setLayoutY(6);
@@ -111,7 +111,7 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 		Stage stage;
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/app/ClienteInfo.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/ClienteInfo.fxml"));
 		stage.setScene(new Scene(root));
 		stage.setTitle("Informações sobre o cliente");
 		stage.initModality(Modality.APPLICATION_MODAL);

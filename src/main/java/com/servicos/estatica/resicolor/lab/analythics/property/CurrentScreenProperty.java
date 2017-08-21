@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.property;
+package com.servicos.estatica.resicolor.lab.analythics.property;
 
 import javafx.beans.property.SimpleStringProperty;
 

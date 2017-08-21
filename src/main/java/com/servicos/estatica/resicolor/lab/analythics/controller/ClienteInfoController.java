@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.controller;
+package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.awt.Desktop;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class EstaticaInfoController implements Initializable {
+public class ClienteInfoController implements Initializable {
 
 	@FXML
 	private Button btVoltar;
@@ -30,7 +30,7 @@ public class EstaticaInfoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/style/logotipo.png"));
+		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/resicolor.png"));
 		rectMoldura.setFill(Color.TRANSPARENT);
 	}
 

@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.model;
+package com.servicos.estatica.resicolor.lab.analythics.model;
 
 import java.io.Serializable;
 import java.util.Date;

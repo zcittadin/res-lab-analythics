@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.util;
+package com.servicos.estatica.resicolor.lab.analythics.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,10 +6,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import com.servicos.estatica.resicolorlab.analythics.model.Amostra;
-import com.servicos.estatica.resicolorlab.analythics.model.Leitura;
-import com.servicos.estatica.resicolorlab.analythics.model.Projeto;
-import com.servicos.estatica.resicolorlab.analythics.model.Prova;
+import com.servicos.estatica.resicolor.lab.analythics.model.Amostra;
+import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
+import com.servicos.estatica.resicolor.lab.analythics.model.Projeto;
+import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 
 public class HibernateUtil {
 

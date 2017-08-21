@@ -1,8 +1,8 @@
-package com.servicos.estatica.resicolorlab.analythics.app;
+package com.servicos.estatica.resicolor.lab.analythics.app;
 
 import java.util.Optional;
 
-import com.servicos.estatica.resicolorlab.analythics.util.HibernateUtil;
+import com.servicos.estatica.resicolor.lab.analythics.util.HibernateUtil;
 
 import javafx.application.Application;
 import javafx.application.Platform;

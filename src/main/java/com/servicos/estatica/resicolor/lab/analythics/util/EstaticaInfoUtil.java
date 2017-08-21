@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.util;
+package com.servicos.estatica.resicolor.lab.analythics.util;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class EstaticaInfoUtil {
 	private static ImageViewResizer estaticaResizer;
 
 	protected void initEstaticaInfo() {
-		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/style/logotipo.png"));
+		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/logotipo.png"));
 		estaticaResizer = new ImageViewResizer(imgEstatica, 136, 57);
 		estaticaResizer.setLayoutX(1223);
 		estaticaResizer.setLayoutY(13);
@@ -40,7 +40,7 @@ public class EstaticaInfoUtil {
 		Stage stage;
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/app/EstaticaInfo.fxml"));
+		root = FXMLLoader.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/EstaticaInfo.fxml"));
 		stage.setScene(new Scene(root));
 		stage.setTitle("Informações sobre o fabricante");
 		stage.initModality(Modality.APPLICATION_MODAL);

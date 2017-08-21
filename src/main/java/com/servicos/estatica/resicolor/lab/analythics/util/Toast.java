@@ -1,4 +1,4 @@
-package com.servicos.estatica.resicolorlab.analythics.util;
+package com.servicos.estatica.resicolor.lab.analythics.util;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

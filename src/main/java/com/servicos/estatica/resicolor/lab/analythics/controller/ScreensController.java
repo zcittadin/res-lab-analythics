@@ -1,8 +1,8 @@
-package com.servicos.estatica.resicolorlab.analythics.controller;
+package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.util.HashMap;
 
-import com.servicos.estatica.resicolorlab.analythics.app.ControlledScreen;
+import com.servicos.estatica.resicolor.lab.analythics.app.ControlledScreen;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

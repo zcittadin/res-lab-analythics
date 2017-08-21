@@ -1,9 +1,9 @@
-package com.servicos.estatica.resicolorlab.analythics.controller;
+package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.servicos.estatica.resicolorlab.analythics.app.ControlledScreen;
+import com.servicos.estatica.resicolor.lab.analythics.app.ControlledScreen;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,0 +1,86 @@
+.myGradient {
+	-fx-background-color: linear-gradient(to bottom, #87e0fd 0.0%,#53cbf1 40.0%,#05abe0 100.0%);
+}
+
+.secondGradient{
+	-fx-background-color: linear-gradient(to bottom, rgba(0.0,28.0,28.0,1.0) 0.0%, rgba(0.0,128.0,128.0,1.0) 100.0%);
+}
+
+.displayGradient{
+	-fx-background-color: linear-gradient(to bottom, rgba(69.0, 72.0, 77.0, 1.0) 3.0%,
+		rgba(0.0, 0.0, 0.0, 1.0) 100.0%);
+}
+
+.chart-title {
+  -fx-text-fill: #09156f;
+  -fx-font-size: 20.0px;
+  -fx-font-weight: bold;
+  -fx-font-family: Consolas;
+}
+
+.axis-label {
+	-fx-text-fill: #09156f;
+	-fx-font-size: 19.0px;
+	-fx-font-weight: bold
+}
+
+.chart-series-line {    
+    -fx-stroke-width: 1.0px;
+    -fx-effect: null;
+}
+
+/* .chart-plot-background {
+    -fx-background-color:  rgba(0.0,255.0,126.0,0.0);
+}*/
+
+.default-color0.chart-series-line { 
+	-fx-stroke: #FF0000; 
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: rgba(0.0,255.0,126.0,0.0);
+}
+
+.btStyleAdd {
+  -fx-graphic: url('add.png');
+}
+
+.btStyleConnect {
+  -fx-graphic: url('connect.png');
+}
+
+.btStyleDisconnect {
+  -fx-graphic: url('disconnect.png');
+}
+
+.btStyleChart {
+  -fx-graphic: url('chart_line.png');
+}
+
+.btStylePlay {
+  -fx-graphic: url('control_play_blue.png');
+}
+
+.btStyleStop {
+  -fx-graphic: url('control_stop_blue.png');
+}
+
+.btStyleReport {
+  -fx-graphic: url('layout.png');
+}
+
+.btStyleUp {
+  -fx-graphic: url('pyramid.png');
+}
+.btStyleSearch {
+  -fx-graphic: url('zoom.png');
+}
+.btStyleSave {
+  -fx-graphic: url('disk.png');
+}
+.btStyleAmostra {
+  -fx-graphic: url('retort.png');
+}
+.btStyleOk {
+  -fx-graphic: url('Yes.png');
+}
