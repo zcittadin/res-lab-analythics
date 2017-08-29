@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 
 <AnchorPane prefHeight="650.0" prefWidth="1300.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.ProvaDetalhesController">
-	<!-- TODO Add Nodes -->
+   <children>
+      <LineChart fx:id="chartLeituras" layoutX="14.0" layoutY="152.0" legendVisible="false" prefHeight="451.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x Tempo">
+        <xAxis>
+          <CategoryAxis gapStartAndEnd="false" side="BOTTOM" tickLabelFill="#09156f" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="ºC" side="LEFT" tickLabelFill="#09156f">
+               <tickLabelFont>
+                  <Font size="17.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </yAxis>
+      </LineChart>
+   </children>
 </AnchorPane>

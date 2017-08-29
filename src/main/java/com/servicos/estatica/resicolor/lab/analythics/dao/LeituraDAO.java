@@ -12,12 +12,11 @@ import com.servicos.estatica.resicolor.lab.analythics.util.HibernateUtil;
 
 public class LeituraDAO {
 
-	public List<Leitura> findByProvaName(String name) {
+	public List<Leitura> findLeiturasByProva(Prova prova) {
 		Session session = HibernateUtil.openSession();
 		session.beginTransaction();
-		Query queryProva = session.createQuery("SELECT p FROM Prova p WHERE nomeProva = :nomeProva");
-		queryProva.setParameter("nomeProva", name);
-		Prova prova = (Prova) queryProva.getSingleResult();
+		Query queryProva = session.createQuery("SELECT p FROM Prova p WHERE id = :idProva");
+		queryProva.setParameter("idProva", prova.getId());
 		session.close();
 		return prova.getLeituras();
 	}
