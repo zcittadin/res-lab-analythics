@@ -27,7 +27,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label layoutX="453.0" layoutY="21.0" text="Controle de ensaio laboratorial" textFill="#09156f">
+                  <Label layoutX="453.0" layoutY="21.0" text="Análise de ensaio laboratorial" textFill="#09156f">
                      <font>
                         <Font name="Corbel Bold" size="38.0" />
                      </font>
@@ -60,39 +60,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Button fx:id="btInicio" layoutY="115.0" mnemonicParsing="false" onAction="#openScreenInicial" prefHeight="37.0" prefWidth="158.0" text="Início">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutY="153.0" mnemonicParsing="false" onAction="#openScreen1" prefHeight="37.0" prefWidth="158.0" text="Balão 1">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutY="191.0" mnemonicParsing="false" onAction="#openScreen2" prefHeight="37.0" prefWidth="158.0" text="Balão 2">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutY="229.0" mnemonicParsing="false" onAction="#openScreen3" prefHeight="37.0" prefWidth="158.0" text="Balão 3">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button layoutY="267.0" mnemonicParsing="false" onAction="#openConsulta" prefHeight="37.0" prefWidth="158.0" text="Consultas">
+                  <Button fx:id="btInicio" layoutY="115.0" mnemonicParsing="false" onAction="#openConsulta" prefHeight="37.0" prefWidth="158.0" text="Consulta">
                      <font>
                         <Font size="16.0" />
                      </font>

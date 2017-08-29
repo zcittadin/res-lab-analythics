@@ -29,7 +29,7 @@ public class Prova implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_projeto")
 	private Projeto projeto;
-	@OneToMany(mappedBy = "provaLeituras", targetEntity = Leitura.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "provaLeituras", targetEntity = Leitura.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Leitura> leituras;
 	@OneToMany(mappedBy = "provaAmostras", targetEntity = Amostra.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Amostra> amostras;

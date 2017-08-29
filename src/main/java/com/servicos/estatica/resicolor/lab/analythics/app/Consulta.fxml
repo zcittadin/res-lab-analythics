@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -17,12 +18,6 @@
 
 <AnchorPane fx:id="mainPane" prefHeight="664.0" prefWidth="1208.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.ConsultaController">
    <children>
-      <TableView layoutX="29.0" layoutY="257.0" prefHeight="360.0" prefWidth="1150.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
       <Rectangle fx:id="rectForm" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="225.0" layoutX="335.0" layoutY="16.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="510.0" />
       <Separator orientation="VERTICAL" prefHeight="664.0" />
       <Label layoutX="357.0" layoutY="26.0" text="Dados para consulta" textFill="#09156f">
@@ -30,17 +25,25 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <RadioButton layoutX="357.0" layoutY="80.0" mnemonicParsing="false" text="Últimos ensaios" textFill="#09156f" />
-      <RadioButton layoutX="357.0" layoutY="116.0" mnemonicParsing="false" text="Por período" textFill="#09156f" />
-      <RadioButton layoutX="357.0" layoutY="152.0" mnemonicParsing="false" text="Por lote" textFill="#09156f" />
-      <Spinner layoutX="524.0" layoutY="75.0" prefHeight="25.0" prefWidth="66.0" />
-      <DatePicker layoutX="524.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
-      <DatePicker layoutX="682.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
-      <TextField layoutX="524.0" layoutY="148.0" prefHeight="27.0" prefWidth="301.0" />
-      <Button layoutX="558.0" layoutY="203.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleSearch" stylesheets="@../style/style.css" text="Pesquisar">
+      <RadioButton fx:id="rdUltimos" layoutX="357.0" layoutY="80.0" mnemonicParsing="false" onAction="#selectUltimos" text="Últimos ensaios" textFill="#09156f" />
+      <RadioButton fx:id="rdPeriodo" layoutX="357.0" layoutY="116.0" mnemonicParsing="false" onAction="#selectPorPeriodo" text="Por período" textFill="#09156f" />
+      <RadioButton fx:id="rdProva" layoutX="357.0" layoutY="152.0" mnemonicParsing="false" onAction="#selectPorProva" text="Por prova" textFill="#09156f" />
+      <Spinner fx:id="spnUltimos" layoutX="524.0" layoutY="75.0" prefHeight="25.0" prefWidth="66.0" />
+      <DatePicker fx:id="dtpInicio" disable="true" layoutX="524.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
+      <DatePicker fx:id="dtpFinal" disable="true" layoutX="682.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
+      <TextField fx:id="txtProva" disable="true" layoutX="524.0" layoutY="148.0" prefHeight="27.0" prefWidth="301.0" />
+      <Button fx:id="btBuscar" layoutX="558.0" layoutY="203.0" mnemonicParsing="false" onAction="#findByProvaName" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleSearch" stylesheets="@../style/style.css" text="Pesquisar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
       <Line endX="408.0" layoutX="436.0" layoutY="191.0" startX="-100.0" stroke="#09156f" strokeWidth="2.0" />
+      <LineChart fx:id="chartConsulta" createSymbols="false" layoutX="27.0" layoutY="242.0" prefHeight="400.0" prefWidth="1155.0" stylesheets="@../style/style.css">
+        <xAxis>
+          <CategoryAxis gapStartAndEnd="false" side="BOTTOM" stylesheets="@../style/style.css" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" stylesheets="@../style/style.css" />
+        </yAxis>
+      </LineChart>
    </children>
 </AnchorPane>
