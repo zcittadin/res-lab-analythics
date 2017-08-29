@@ -26,12 +26,12 @@
         <columns>
           <TableColumn fx:id="colNomeRecentes" prefWidth="146.0" text="Nome da prova" />
           <TableColumn fx:id="colProjetoRecentes" prefWidth="126.0" text="Projeto" />
-            <TableColumn fx:id="colObjetivoRecentes" prefWidth="229.0" text="Objetivo" />
-            <TableColumn fx:id="colExecutorRecentes" prefWidth="116.0" text="Executor" />
-            <TableColumn fx:id="colBalaoRecentes" prefWidth="104.0" text="Balão" />
-            <TableColumn fx:id="colNumeroRecentes" prefWidth="133.0" text="Nº do produto" />
-            <TableColumn fx:id="colInicioRecentes" prefWidth="141.0" text="Início" />
-            <TableColumn fx:id="colFinalRecentes" prefWidth="137.0" text="Final" />
+            <TableColumn fx:id="colObjetivoRecentes" prefWidth="277.0" text="Objetivo" />
+            <TableColumn fx:id="colExecutorRecentes" prefWidth="112.0" text="Executor" />
+            <TableColumn fx:id="colBalaoRecentes" prefWidth="96.0" text="Balão" />
+            <TableColumn fx:id="colNumeroRecentes" prefWidth="136.0" text="Nº do produto" />
+            <TableColumn fx:id="colFinalRecentes" prefWidth="146.0" text="Finalizado" />
+            <TableColumn fx:id="colDetalharRecentes" minWidth="8.0" prefWidth="93.0" text="Detalhar" />
         </columns>
       </TableView>
       <Label layoutX="41.0" layoutY="17.0" text="Provas em andamento" textFill="#09156f">

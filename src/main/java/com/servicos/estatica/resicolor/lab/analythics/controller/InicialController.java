@@ -1,5 +1,6 @@
 package com.servicos.estatica.resicolor.lab.analythics.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -17,11 +18,21 @@ import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 @SuppressWarnings("rawtypes")
@@ -58,9 +69,9 @@ public class InicialController implements Initializable, ControlledScreen {
 	@FXML
 	private TableColumn colNumeroRecentes;
 	@FXML
-	private TableColumn colInicioRecentes;
-	@FXML
 	private TableColumn colFinalRecentes;
+	@FXML
+	private TableColumn colDetalharRecentes;
 	@FXML
 	private ProgressIndicator progAndamento;
 	@FXML
@@ -273,15 +284,6 @@ public class InicialController implements Initializable, ControlledScreen {
 						return simpleObject;
 					}
 				});
-		colInicioRecentes.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Prova, String>, ObservableValue<String>>() {
-					public ObservableValue<String> call(CellDataFeatures<Prova, String> cell) {
-						final Prova p = cell.getValue();
-						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
-								new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(p.getDhInicial()));
-						return simpleObject;
-					}
-				});
 		colFinalRecentes.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<Prova, String>, ObservableValue<String>>() {
 					public ObservableValue<String> call(CellDataFeatures<Prova, String> cell) {
@@ -291,16 +293,74 @@ public class InicialController implements Initializable, ControlledScreen {
 						return simpleObject;
 					}
 				});
+
+		colDetalharRecentes.setCellValueFactory(new PropertyValueFactory<>("DUMMY"));
+
+		Callback<TableColumn<Prova, String>, TableCell<Prova, String>> cellDetalharFactory = //
+				new Callback<TableColumn<Prova, String>, TableCell<Prova, String>>() {
+					@Override
+					public TableCell call(final TableColumn<Prova, String> param) {
+						final TableCell<Prova, String> cell = new TableCell<Prova, String>() {
+
+							final Button btn = new Button();
+
+							@Override
+							public void updateItem(String item, boolean empty) {
+								super.updateItem(item, empty);
+								if (empty) {
+									setGraphic(null);
+									setText(null);
+								} else {
+									btn.setOnAction(event -> {
+
+										try {
+											Stage stage;
+											Parent root;
+											stage = new Stage();
+											URL url = getClass()
+													.getResource("/com/servicos/estatica/resicolor/lab/analythics/app/ProvaDetalhes.fxml");
+											FXMLLoader fxmlloader = new FXMLLoader();
+											fxmlloader.setLocation(url);
+											fxmlloader.setBuilderFactory(new JavaFXBuilderFactory());
+											root = (Parent) fxmlloader.load(url.openStream());
+											stage.setScene(new Scene(root));
+											stage.setTitle("Visualização gráfica do processo");
+											stage.initModality(Modality.APPLICATION_MODAL);
+											stage.initOwner(tblAndamento.getScene().getWindow());
+											stage.setResizable(Boolean.FALSE);
+											 ((ProvaDetalhesController) fxmlloader.getController())
+											 .setContext(getTableView().getItems().get(getIndex()));
+											stage.showAndWait();
+										} catch (IOException e) {
+											System.err.println("Erro ao carregar FXML!");
+											e.printStackTrace();
+										}
+
+									});
+									// Tooltip.install(btn, tooltipChart);
+									btn.setStyle(
+											"-fx-graphic: url('com/servicos/estatica/resicolor/lab/analythics/style/View.png');");
+									btn.setCursor(Cursor.HAND);
+									setGraphic(btn);
+									setText(null);
+								}
+							}
+						};
+						return cell;
+					}
+				};
+		colDetalharRecentes.setCellFactory(cellDetalharFactory);
+
 		colNomeRecentes.setStyle("-fx-alignment: CENTER;");
 		colProjetoRecentes.setStyle("-fx-alignment: CENTER;");
 		colObjetivoRecentes.setStyle("-fx-alignment: CENTER;");
 		colExecutorRecentes.setStyle("-fx-alignment: CENTER;");
 		colBalaoRecentes.setStyle("-fx-alignment: CENTER;");
 		colNumeroRecentes.setStyle("-fx-alignment: CENTER;");
-		colInicioRecentes.setStyle("-fx-alignment: CENTER;");
 		colFinalRecentes.setStyle("-fx-alignment: CENTER;");
+		colDetalharRecentes.setStyle("-fx-alignment: CENTER;");
 		tblRecentes.getColumns().setAll(colNomeRecentes, colProjetoRecentes, colObjetivoRecentes, colExecutorRecentes,
-				colBalaoRecentes, colNumeroRecentes, colInicioRecentes, colFinalRecentes);
+				colBalaoRecentes, colNumeroRecentes, colFinalRecentes, colDetalharRecentes);
 
 	}
 }
