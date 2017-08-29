@@ -23,4 +23,17 @@ public class ProvaDAO {
 		session.close();
 		return list;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Prova> findRecentes() {
+		Session session = HibernateUtil.openSession();
+		session.beginTransaction();
+		String hql = "SELECT p FROM Prova p WHERE p.dhFinal IS NOT NULL ORDER BY p.id DESC";
+		Query query = session.createQuery(hql);
+		query.setMaxResults(8);
+		List<Prova> list = new ArrayList<>();
+		list = query.getResultList();
+		session.close();
+		return list;
+	}
 }

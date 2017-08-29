@@ -22,10 +22,16 @@
             <TableColumn fx:id="colInicioAndamento" prefWidth="145.0" text="Início" />
         </columns>
       </TableView>
-      <TableView layoutX="41.0" layoutY="365.0" prefHeight="250.0" prefWidth="1134.0">
+      <TableView fx:id="tblRecentes" layoutX="41.0" layoutY="365.0" prefHeight="250.0" prefWidth="1134.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="colNomeRecentes" prefWidth="146.0" text="Nome da prova" />
+          <TableColumn fx:id="colProjetoRecentes" prefWidth="126.0" text="Projeto" />
+            <TableColumn fx:id="colObjetivoRecentes" prefWidth="229.0" text="Objetivo" />
+            <TableColumn fx:id="colExecutorRecentes" prefWidth="116.0" text="Executor" />
+            <TableColumn fx:id="colBalaoRecentes" prefWidth="104.0" text="Balão" />
+            <TableColumn fx:id="colNumeroRecentes" prefWidth="133.0" text="Nº do produto" />
+            <TableColumn fx:id="colInicioRecentes" prefWidth="141.0" text="Início" />
+            <TableColumn fx:id="colFinalRecentes" prefWidth="137.0" text="Final" />
         </columns>
       </TableView>
       <Label layoutX="41.0" layoutY="17.0" text="Provas em andamento" textFill="#09156f">
@@ -39,5 +45,6 @@
          </font>
       </Label>
       <ProgressIndicator fx:id="progAndamento" layoutX="563.0" layoutY="139.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+      <ProgressIndicator fx:id="progRecentes" layoutX="560.0" layoutY="454.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #00BFFF;" visible="false" />
    </children>
 </AnchorPane>
