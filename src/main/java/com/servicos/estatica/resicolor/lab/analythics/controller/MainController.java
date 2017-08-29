@@ -31,7 +31,7 @@ import zan.inc.custom.components.ImageViewResizer;
 public class MainController extends EstaticaInfoUtil implements Initializable {
 
 	public static String screenInicialID = "inicial";
-	public static String screenInicialFile = "/com/servicos/estatica/resicolor/lab/app/InicialScreen.fxml";
+	public static String screenInicialFile = "/com/servicos/estatica/resicolor/lab/analythics/app/Inicial.fxml";
 	public static String screen1ID = "screen1";
 	public static String screen1File = "/com/servicos/estatica/resicolor/lab/app/Screen1.fxml";
 	public static String screen2ID = "screen2";
@@ -75,9 +75,9 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 		imgExitResizer.setLayoutY(633);
 		mainPane.getChildren().addAll(imgClienteResizer, imgExitResizer);
 
-		mainContainer.loadScreen(screenConsultaID, screenConsultaFile);
-		CurrentScreenProperty.setScreen(screenConsultaID);
-		mainContainer.setScreen(screenConsultaID);
+		mainContainer.loadScreen(screenInicialID, screenInicialFile);
+		CurrentScreenProperty.setScreen(screenInicialID);
+		mainContainer.setScreen(screenInicialID);
 		centralPane.getChildren().addAll(mainContainer);
 
 	}

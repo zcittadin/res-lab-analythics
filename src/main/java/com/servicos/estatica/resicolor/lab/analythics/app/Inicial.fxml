@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="664.0" prefWidth="1208.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.InicialController">
+   <children>
+      <Separator orientation="VERTICAL" prefHeight="664.0" />
+      <TableView fx:id="tblAndamento" layoutX="41.0" layoutY="48.0" prefHeight="250.0" prefWidth="1134.0">
+        <columns>
+          <TableColumn fx:id="colNomeAndamento" prefWidth="173.0" text="Nome da prova" />
+            <TableColumn fx:id="colProjetoAndamento" prefWidth="169.0" text="Projeto" />
+          <TableColumn fx:id="colObjetivoAndamento" prefWidth="301.0" text="Objetivo" />
+            <TableColumn fx:id="colExecutorAndamento" prefWidth="117.0" text="Executor" />
+            <TableColumn fx:id="colBalaoAndamento" prefWidth="84.0" text="Balão" />
+            <TableColumn fx:id="colNumeroAndamento" prefWidth="144.0" text="Nº do produto" />
+            <TableColumn fx:id="colInicioAndamento" prefWidth="145.0" text="Início" />
+        </columns>
+      </TableView>
+      <TableView layoutX="41.0" layoutY="365.0" prefHeight="250.0" prefWidth="1134.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <Label layoutX="41.0" layoutY="17.0" text="Provas em andamento" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="41.0" layoutY="333.0" text="Provas recentes" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ProgressIndicator fx:id="progAndamento" layoutX="563.0" layoutY="139.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+   </children>
+</AnchorPane>
