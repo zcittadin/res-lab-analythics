@@ -2,7 +2,6 @@ package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -78,7 +76,6 @@ public class ProvaDetalhesController implements Initializable {
 
 	private static XYChart.Series<String, Number> tempSeries;
 	private static DateTimeFormatter dataHoraFormatter = DateTimeFormatter.ofPattern("HH:mm:ss - dd/MM/yy");
-	private static DateTimeFormatter horasFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 	final ObservableList<XYChart.Series<String, Number>> plotValuesList = FXCollections.observableArrayList();
 	private static ObservableList<Amostra> amostras = FXCollections.observableArrayList();

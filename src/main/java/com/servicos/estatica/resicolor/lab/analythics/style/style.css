@@ -73,7 +73,7 @@
   -fx-graphic: url('pyramid.png');
 }
 .btStyleSearch {
-  -fx-graphic: url('zoom.png');
+  -fx-graphic: url('View.png');
 }
 .btStyleSave {
   -fx-graphic: url('disk.png');

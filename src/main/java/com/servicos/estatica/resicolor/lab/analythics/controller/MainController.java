@@ -32,8 +32,8 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 
 	public static String screenInicialID = "inicial";
 	public static String screenInicialFile = "/com/servicos/estatica/resicolor/lab/analythics/app/Inicial.fxml";
-	public static String screen1ID = "screen1";
-	public static String screen1File = "/com/servicos/estatica/resicolor/lab/app/Screen1.fxml";
+	public static String screenAnalisesID = "analises";
+	public static String screenAnalisesFile = "/com/servicos/estatica/resicolor/lab/analythics/app/Analises.fxml";
 	public static String screen2ID = "screen2";
 	public static String screen2File = "/com/servicos/estatica/resicolor/lab/app/Screen2.fxml";
 	public static String screen3ID = "screen3";
@@ -76,6 +76,7 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 		mainPane.getChildren().addAll(imgClienteResizer, imgExitResizer);
 
 		mainContainer.loadScreen(screenInicialID, screenInicialFile);
+		mainContainer.loadScreen(screenAnalisesID, screenAnalisesFile);
 		CurrentScreenProperty.setScreen(screenInicialID);
 		mainContainer.setScreen(screenInicialID);
 		centralPane.getChildren().addAll(mainContainer);
@@ -83,13 +84,13 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 	}
 
 	@FXML
-	private void openScreenInicial() {
+	private void openInicial() {
 		mainContainer.setScreen(screenInicialID);
 	}
 
 	@FXML
-	private void openScreen1() {
-		mainContainer.setScreen(screen1ID);
+	private void openAnalises() {
+		mainContainer.setScreen(screenAnalisesID);
 	}
 
 	@FXML
