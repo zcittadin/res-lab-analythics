@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,8 +19,8 @@
 <AnchorPane prefHeight="664.0" prefWidth="1208.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.AnalisesController">
    <children>
       <Separator orientation="VERTICAL" prefHeight="664.0" />
-      <Rectangle fx:id="rectForm" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="225.0" layoutX="42.0" layoutY="16.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="510.0" />
-      <Button fx:id="btSearch" layoutX="251.0" layoutY="202.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleSearch" stylesheets="@../style/style.css" text="Pesquisar">
+      <Rectangle fx:id="rect1" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="225.0" layoutX="42.0" layoutY="16.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="510.0" />
+      <Button fx:id="btSearch" layoutX="251.0" layoutY="202.0" mnemonicParsing="false" onAction="#consultar" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleSearch" stylesheets="@../style/style.css" text="Pesquisar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -29,14 +30,14 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <RadioButton fx:id="rdProjeto" layoutX="64.0" layoutY="80.0" mnemonicParsing="false" text="Por projeto" textFill="#09156f" />
-      <RadioButton fx:id="rdPeriodo" layoutX="64.0" layoutY="116.0" mnemonicParsing="false" text="Por período" textFill="#09156f" />
-      <RadioButton layoutX="64.0" layoutY="152.0" mnemonicParsing="false" text="Por lote" textFill="#09156f" />
+      <RadioButton fx:id="rdProjeto" layoutX="64.0" layoutY="80.0" mnemonicParsing="false" onAction="#selectByProjeto" selected="true" text="Por nome do projeto" textFill="#09156f" />
+      <RadioButton fx:id="rdPeriodo" layoutX="64.0" layoutY="153.0" mnemonicParsing="false" onAction="#selectByPeriodo" text="Por período" textFill="#09156f" />
+      <RadioButton fx:id="rdNomeProva" layoutX="64.0" layoutY="116.0" mnemonicParsing="false" onAction="#selectByNomeProva" text="Por nome da prova" textFill="#09156f" />
       <Line endX="408.0" layoutX="143.0" layoutY="191.0" startX="-100.0" stroke="#09156f" strokeWidth="2.0" />
-      <DatePicker fx:id="dtpInicio" layoutX="231.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
-      <DatePicker fx:id="dtpFim" layoutX="389.0" layoutY="111.0" prefHeight="27.0" prefWidth="143.0" />
-      <TextField layoutX="231.0" layoutY="148.0" prefHeight="27.0" prefWidth="301.0" />
-      <TableView fx:id="tblProvas" layoutX="39.0" layoutY="267.0" prefHeight="360.0" prefWidth="1150.0">
+      <DatePicker fx:id="dtpInicio" disable="true" layoutX="231.0" layoutY="148.0" prefHeight="27.0" prefWidth="143.0" />
+      <DatePicker fx:id="dtpFim" disable="true" layoutX="390.0" layoutY="148.0" prefHeight="27.0" prefWidth="143.0" />
+      <TextField fx:id="txtNomeProva" disable="true" layoutX="231.0" layoutY="111.0" prefHeight="27.0" prefWidth="301.0" />
+      <TableView fx:id="tblProvas" layoutX="39.0" layoutY="267.0" onMouseClicked="#selectProva" prefHeight="360.0" prefWidth="1150.0">
          <columns>
             <TableColumn fx:id="colNome" prefWidth="189.00003051757812" text="Nome da prova" />
             <TableColumn fx:id="colProjeto" prefWidth="150.0" text="Projeto" />
@@ -48,5 +49,30 @@
          </columns>
       </TableView>
       <TextField fx:id="txtProjeto" layoutX="231.0" layoutY="75.0" prefHeight="27.0" prefWidth="301.0" />
+      <Rectangle fx:id="rect2" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="225.0" layoutX="574.0" layoutY="16.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="612.0" />
+      <Label layoutX="598.0" layoutY="26.0" text="Provas selecionadas" textFill="#09156f">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ProgressIndicator fx:id="progDados" layoutX="199.0" layoutY="80.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+      <ProgressIndicator fx:id="progTable" layoutX="512.0" layoutY="393.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+      <Line endX="508.0" layoutX="676.0" layoutY="61.0" startX="-100.0" stroke="#09156f" strokeWidth="2.0" />
+      <Line endY="76.0" layoutX="880.0" layoutY="163.0" startY="-100.0" stroke="#09156f" strokeWidth="2.0" />
+      <RadioButton fx:id="rdProva1" layoutX="589.0" layoutY="72.0" mnemonicParsing="false" selected="true" textFill="#09156f" />
+      <RadioButton fx:id="rdProva2" layoutX="894.0" layoutY="72.0" mnemonicParsing="false" textFill="#09156f" />
+      <TextField fx:id="txtComparaProva1" editable="false" layoutX="589.0" layoutY="122.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <TextField fx:id="txtComparaProjeto1" editable="false" layoutX="589.0" layoutY="178.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <Label layoutX="589.0" layoutY="104.0" text="Nome da prova:" textFill="#09156f" />
+      <Label layoutX="589.0" layoutY="162.0" text="Nome do projeto" textFill="#09156f" />
+      <TextField fx:id="txtComparaProva2" editable="false" layoutX="894.0" layoutY="122.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <TextField fx:id="txtComparaProjeto2" editable="false" layoutX="894.0" layoutY="178.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <Label layoutX="894.0" layoutY="104.0" text="Nome da prova:" textFill="#09156f" />
+      <Label layoutX="894.0" layoutY="162.0" text="Nome do projeto" textFill="#09156f" />
+      <Button fx:id="btSearch1" layoutX="1079.0" layoutY="27.0" mnemonicParsing="false" onAction="#analise" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleEye" stylesheets="@../style/style.css" text="Analisar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

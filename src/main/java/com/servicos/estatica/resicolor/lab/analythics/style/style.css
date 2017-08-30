@@ -72,15 +72,23 @@
 .btStyleUp {
   -fx-graphic: url('pyramid.png');
 }
+
 .btStyleSearch {
   -fx-graphic: url('View.png');
 }
+
 .btStyleSave {
   -fx-graphic: url('disk.png');
 }
+
 .btStyleAmostra {
   -fx-graphic: url('retort.png');
 }
+
 .btStyleOk {
   -fx-graphic: url('Yes.png');
+}
+
+.btStyleEye {
+  -fx-graphic: url('Eye.png');
 }

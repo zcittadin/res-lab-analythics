@@ -24,7 +24,7 @@ public class Projeto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@OneToMany(mappedBy = "projeto", targetEntity = Prova.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "projeto", targetEntity = Prova.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Prova> provas;
 	@Column(name = "nome")
 	private String nome;
