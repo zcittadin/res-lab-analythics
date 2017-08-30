@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "amostras")
 public class Amostra implements Serializable {
 
-	private static final long serialVersionUID = 6150418213712955052L;
+	private static final long serialVersionUID = -7402849524350630270L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +29,9 @@ public class Amostra implements Serializable {
 	@Column(name = "horario")
 	private Date horario;
 	@Column(name = "temp")
-	private int temp;
+	private double temp;
 	@Column(name = "set_point")
-	private int setPoint;
+	private double setPoint;
 	@Column(name = "ia_sobre_nv")
 	private double iaSobreNv;
 	@Column(name = "visc_gardner")
@@ -55,7 +55,7 @@ public class Amostra implements Serializable {
 
 	}
 
-	public Amostra(Long id, Prova provaAmostras, Date horario, int temp, int setPoint, double iaSobreNv,
+	public Amostra(Long id, Prova provaAmostras, Date horario, double temp, double setPoint, double iaSobreNv,
 			String viscGardner, String corGardner, double percentualNv, int gelTime, double agua, double amostra,
 			double ph, String descricao) {
 		this.id = id;
@@ -98,19 +98,19 @@ public class Amostra implements Serializable {
 		this.horario = horario;
 	}
 
-	public int getTemp() {
+	public double getTemp() {
 		return temp;
 	}
 
-	public void setTemp(int temp) {
+	public void setTemp(double temp) {
 		this.temp = temp;
 	}
 
-	public int getSetPoint() {
+	public double getSetPoint() {
 		return setPoint;
 	}
 
-	public void setSetPoint(int setPoint) {
+	public void setSetPoint(double setPoint) {
 		this.setPoint = setPoint;
 	}
 

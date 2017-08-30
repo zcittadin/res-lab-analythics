@@ -3,23 +3,68 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="650.0" prefWidth="1300.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.ProvaDetalhesController">
+<AnchorPane prefHeight="700.0" prefWidth="1300.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.ProvaDetalhesController">
    <children>
-      <LineChart fx:id="chartLeituras" layoutX="14.0" layoutY="152.0" legendVisible="false" prefHeight="451.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x Tempo">
-        <xAxis>
-          <CategoryAxis gapStartAndEnd="false" side="BOTTOM" tickLabelFill="#09156f" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAxis" label="ºC" side="LEFT" tickLabelFill="#09156f">
-               <tickLabelFont>
-                  <Font size="17.0" />
-               </tickLabelFont>
-            </NumberAxis>
-        </yAxis>
-      </LineChart>
+      <TabPane layoutX="9.0" layoutY="94.0" prefHeight="596.0" prefWidth="1283.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Projeção de leituras">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="549.0" prefWidth="1283.0" styleClass="myGradient" stylesheets="@../style/style.css">
+                     <children>
+                        <CheckBox fx:id="chkMarcadores" layoutX="1121.0" layoutY="27.0" mnemonicParsing="false" onAction="#toggleMarks" text="Visualizar marcadores" textFill="#09156f" />
+                        <LineChart fx:id="chartLeituras" animated="false" layoutY="44.0" legendVisible="false" prefHeight="508.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x Tempo">
+                          <xAxis>
+                            <CategoryAxis animated="false" gapStartAndEnd="false" side="BOTTOM" tickLabelFill="#09156f" fx:id="xAxis">
+                                 <tickLabelFont>
+                                    <Font size="12.0" />
+                                 </tickLabelFont>
+                              </CategoryAxis>
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis fx:id="yAxis" label="ºC" side="LEFT" tickLabelFill="#09156f">
+                                 <tickLabelFont>
+                                    <Font size="17.0" />
+                                 </tickLabelFont>
+                              </NumberAxis>
+                          </yAxis>
+                        </LineChart>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Análise de amostras">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tblAmostras" layoutX="14.0" layoutY="36.0" prefHeight="512.0" prefWidth="1252.0">
+                          <columns>
+                            <TableColumn fx:id="colHora" prefWidth="107.00003051757812" text="Hora" />
+                            <TableColumn fx:id="colTemp" prefWidth="59.000030517578125" text="°C" />
+                              <TableColumn fx:id="colSetPoint" prefWidth="60.0" text="Set-point" />
+                              <TableColumn fx:id="colIASobreNV" prefWidth="83.0" text="IA sobre NV" />
+                              <TableColumn fx:id="colViscGardner" prefWidth="85.0" text="Visc. Gardner" />
+                              <TableColumn fx:id="colCorGardner" prefWidth="116.0" text="Cor Gardner" />
+                              <TableColumn fx:id="colNv" prefWidth="93.0" text="NV%" />
+                              <TableColumn fx:id="colGelTime" prefWidth="120.0" text="Gel time (seg)" />
+                              <TableColumn fx:id="colAgua" prefWidth="126.0" text="Água (ml)" />
+                              <TableColumn fx:id="colAmostra" prefWidth="114.0" text="Amostra (g)" />
+                              <TableColumn fx:id="colPh" prefWidth="57.0" text="PH" />
+                              <TableColumn fx:id="colDescricao" prefWidth="231.0" text="Descrição do processo" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
