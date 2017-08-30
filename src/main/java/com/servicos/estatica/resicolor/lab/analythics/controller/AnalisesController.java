@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 
 import com.servicos.estatica.resicolor.lab.analythics.app.ControlledScreen;
 import com.servicos.estatica.resicolor.lab.analythics.dao.ProvaDAO;
-import com.servicos.estatica.resicolor.lab.analythics.model.Amostra;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -271,13 +271,17 @@ public class AnalisesController implements Initializable, ControlledScreen {
 		Stage stage;
 		Parent root;
 		stage = new Stage();
-		root = FXMLLoader
-				.load(getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/Comparacao.fxml"));
+		URL url = getClass().getResource("/com/servicos/estatica/resicolor/lab/analythics/app/Comparacao.fxml");
+		FXMLLoader fxmlloader = new FXMLLoader();
+		fxmlloader.setLocation(url);
+		fxmlloader.setBuilderFactory(new JavaFXBuilderFactory());
+		root = (Parent) fxmlloader.load(url.openStream());
 		stage.setScene(new Scene(root));
-		stage.setTitle("Análise e comparação de provas");
+		stage.setTitle("Visualização gráfica do processo");
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(tblProvas.getScene().getWindow());
 		stage.setResizable(Boolean.FALSE);
+		((ComparacaoController) fxmlloader.getController()).setContext(prova1, prova2);
 		stage.showAndWait();
 	}
 
