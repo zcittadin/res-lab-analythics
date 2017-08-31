@@ -68,16 +68,87 @@ public class ComparacaoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		configLineChart();
 	}
 
 	public void setContext(Prova pr1, Prova pr2) {
 		prova1 = pr1;
 		prova2 = pr2;
-		consultar();
+		configLineChart();
+		if (prova1 != null && prova2 != null) {
+			consultarComparative();
+			return;
+		}
+		if (prova1 != null) {
+			consultarSingle1();
+			return;
+		}
+		if (prova2 != null) {
+			consultarSingle2();
+			return;
+		}
 	}
 
-	private void consultar() {
+	private void consultarSingle1() {
+		Task<Void> leiturasTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				leituras1 = leituraDAO.findLeiturasByProva(prova1);
+				return null;
+			}
+		};
+		leiturasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				if (leituras1 != null && !leituras1.isEmpty()) {
+					plotTemp(leituras1, tempSeries1, valueMarks1);
+				}
+			}
+
+		});
+		leiturasTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Falha");
+				alert.setHeaderText("Ocorreu um erro ao consultar os dados.");
+				alert.showAndWait();
+			}
+		});
+		Thread t = new Thread(leiturasTask);
+		t.start();
+	}
+
+	private void consultarSingle2() {
+		Task<Void> leiturasTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				leituras2 = leituraDAO.findLeiturasByProva(prova2);
+				return null;
+			}
+		};
+		leiturasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				if (leituras2 != null && !leituras2.isEmpty()) {
+					plotTemp(leituras2, tempSeries2, valueMarks2);
+				}
+			}
+
+		});
+		leiturasTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Falha");
+				alert.setHeaderText("Ocorreu um erro ao consultar os dados.");
+				alert.showAndWait();
+			}
+		});
+		Thread t = new Thread(leiturasTask);
+		t.start();
+	}
+
+	private void consultarComparative() {
 		Task<Void> leiturasTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -89,7 +160,7 @@ public class ComparacaoController implements Initializable {
 		leiturasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				if (leituras1 != null && !leituras1.isEmpty()) {
+				if (leituras1 != null && leituras2 != null) {
 					populateComparative();
 				}
 			}
@@ -119,7 +190,6 @@ public class ComparacaoController implements Initializable {
 		});
 	}
 
-	@SuppressWarnings("unchecked")
 	private void configLineChart() {
 		yAxis.setAutoRanging(false);
 		yAxis.setLowerBound(0);
@@ -127,19 +197,34 @@ public class ComparacaoController implements Initializable {
 		yAxis.setTickUnit(15);
 		tempSeries1 = new XYChart.Series<String, Number>();
 		tempSeries2 = new XYChart.Series<String, Number>();
-		plotValuesList.addAll(tempSeries1, tempSeries2);
+		if (prova1 != null) {
+			plotValuesList.add(tempSeries1);
+
+		}
+		if (prova2 != null) {
+			plotValuesList.add(tempSeries2);
+
+		}
 		chartLeituras.setData(plotValuesList);
 	}
 
-	private void plotTemp(Double temperatura, Date dtProc, XYChart.Series<String, Number> series, List<Node> marks) {
-		final XYChart.Data<String, Number> data = new XYChart.Data<>(
-				dataHoraFormatter.format(dtProc.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()),
-				temperatura);
-		Node mark = new HoverDataChart(1, temperatura);
-		mark.setVisible(chkMarcadores.isSelected());
-		marks.add(mark);
-		data.setNode(mark);
-		series.getData().add(data);
+	private void plotTemp(List<Leitura> leituras, XYChart.Series<String, Number> series, List<Node> marks) {
+		leituras.forEach(l -> {
+			final XYChart.Data<String, Number> data = new XYChart.Data<>(dataHoraFormatter
+					.format(l.getDtProc().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()), l.getTemp());
+			createLineMark(marks, data, l.getTemp(), "red");
+			series.getData().add(data);
+		});
+		series.setName(leituras.get(0).getProvaLeituras().getNomeProva());
+		chartLeituras.setLegendVisible(true);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				((Node) chartLeituras.lookupAll(".chart-legend-item-symbol").toArray()[0])
+						.setStyle("-fx-background-color: red");
+
+			}
+		});
 	}
 
 	private void populateComparative() {
@@ -157,7 +242,6 @@ public class ComparacaoController implements Initializable {
 
 				createLineMark(valueMarks1, dataLeituras1, leitura.getTemp(), "red");
 				tempSeries1.setName(prova1.getNomeProva());
-
 				tempSeries1.getData().add(dataLeituras1);
 
 				if (leituras2.size() > i) {
@@ -200,6 +284,17 @@ public class ComparacaoController implements Initializable {
 				i++;
 			}
 		}
+		chartLeituras.setLegendVisible(true);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				((Node) chartLeituras.lookupAll(".chart-legend-item-symbol").toArray()[0])
+						.setStyle("-fx-background-color: red");
+				((Node) chartLeituras.lookupAll(".chart-legend-item-symbol").toArray()[1])
+						.setStyle("-fx-background-color: orange");
+
+			}
+		});
 	}
 
 	private void createLineMark(List<Node> nodes, Data<String, Number> data, Double value, String color) {

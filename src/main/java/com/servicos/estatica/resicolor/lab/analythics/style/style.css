@@ -45,6 +45,10 @@
   -fx-graphic: url('add.png');
 }
 
+.btStyleClear {
+  -fx-graphic: url('broom.png');
+}
+
 .btStyleConnect {
   -fx-graphic: url('connect.png');
 }

@@ -180,6 +180,20 @@ public class AnalisesController implements Initializable, ControlledScreen {
 	}
 
 	@FXML
+	private void clearProva1() {
+		prova1 = null;
+		txtComparaProva1.clear();
+		txtComparaProjeto1.clear();
+	}
+
+	@FXML
+	private void clearProva2() {
+		prova2 = null;
+		txtComparaProva2.clear();
+		txtComparaProjeto2.clear();
+	}
+
+	@FXML
 	private void consultar() {
 		// if (!validateFields())
 		// return;
