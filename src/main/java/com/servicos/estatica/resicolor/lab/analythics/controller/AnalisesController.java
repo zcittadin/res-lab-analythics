@@ -120,6 +120,7 @@ public class AnalisesController implements Initializable, ControlledScreen {
 		rdNomeProva.setToggleGroup(groupForm);
 		rdProva1.setToggleGroup(groupProva);
 		rdProva2.setToggleGroup(groupProva);
+		retrieveLastProvas();
 	}
 
 	@FXML
@@ -182,17 +183,7 @@ public class AnalisesController implements Initializable, ControlledScreen {
 	private void consultar() {
 		// if (!validateFields())
 		// return;
-		progDados.setVisible(true);
-		progTable.setVisible(true);
-		rdNomeProva.setDisable(true);
-		rdProjeto.setDisable(true);
-		rdPeriodo.setDisable(true);
-		txtProjeto.setDisable(true);
-		txtNomeProva.setDisable(true);
-		dtpInicio.setDisable(true);
-		dtpFim.setDisable(true);
-		btSearch.setDisable(true);
-		tblProvas.setDisable(true);
+		initFetch();
 		Task<Void> searchTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -216,46 +207,14 @@ public class AnalisesController implements Initializable, ControlledScreen {
 		searchTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				progDados.setVisible(false);
-				progTable.setVisible(false);
-				rdNomeProva.setDisable(false);
-				rdProjeto.setDisable(false);
-				rdPeriodo.setDisable(false);
-				btSearch.setDisable(false);
-				tblProvas.setDisable(false);
-				if (rdProjeto.isSelected()) {
-					txtProjeto.setDisable(false);
-				}
-				if (rdNomeProva.isSelected()) {
-					txtNomeProva.setDisable(false);
-				}
-				if (rdPeriodo.isSelected()) {
-					dtpInicio.setDisable(false);
-					dtpFim.setDisable(false);
-				}
+				endFetch();
 				populateTable();
 			}
 		});
 		searchTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				progDados.setVisible(false);
-				progTable.setVisible(false);
-				rdNomeProva.setDisable(false);
-				rdProjeto.setDisable(false);
-				rdPeriodo.setDisable(false);
-				btSearch.setDisable(false);
-				tblProvas.setDisable(false);
-				if (rdProjeto.isSelected()) {
-					txtProjeto.setDisable(false);
-				}
-				if (rdNomeProva.isSelected()) {
-					txtNomeProva.setDisable(false);
-				}
-				if (rdPeriodo.isSelected()) {
-					dtpInicio.setDisable(false);
-					dtpFim.setDisable(false);
-				}
+				endFetch();
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Falha");
 				alert.setHeaderText("Ocorreu um erro ao consultar os dados.");
@@ -283,6 +242,36 @@ public class AnalisesController implements Initializable, ControlledScreen {
 		stage.setResizable(Boolean.FALSE);
 		((ComparacaoController) fxmlloader.getController()).setContext(prova1, prova2);
 		stage.showAndWait();
+	}
+
+	private void retrieveLastProvas() {
+		initFetch();
+		Task<Void> searchTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				provas = FXCollections.observableList((List<Prova>) provaDAO.findLastFinalizados(10));
+				return null;
+			}
+		};
+		searchTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				endFetch();
+				populateTable();
+			}
+		});
+		searchTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				endFetch();
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Falha");
+				alert.setHeaderText("Ocorreu um erro ao consultar os dados.");
+				alert.showAndWait();
+			}
+		});
+		Thread t = new Thread(searchTask);
+		t.start();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -362,6 +351,40 @@ public class AnalisesController implements Initializable, ControlledScreen {
 		tblProvas.getColumns().setAll(colNome, colProjeto, colObjetivo, colExecutor, colBalao, colNumero,
 				colFinalizado);
 
+	}
+
+	private void initFetch() {
+		progDados.setVisible(true);
+		progTable.setVisible(true);
+		rdNomeProva.setDisable(true);
+		rdProjeto.setDisable(true);
+		rdPeriodo.setDisable(true);
+		txtProjeto.setDisable(true);
+		txtNomeProva.setDisable(true);
+		dtpInicio.setDisable(true);
+		dtpFim.setDisable(true);
+		btSearch.setDisable(true);
+		tblProvas.setDisable(true);
+	}
+
+	private void endFetch() {
+		progDados.setVisible(false);
+		progTable.setVisible(false);
+		rdNomeProva.setDisable(false);
+		rdProjeto.setDisable(false);
+		rdPeriodo.setDisable(false);
+		btSearch.setDisable(false);
+		tblProvas.setDisable(false);
+		if (rdProjeto.isSelected()) {
+			txtProjeto.setDisable(false);
+		}
+		if (rdNomeProva.isSelected()) {
+			txtNomeProva.setDisable(false);
+		}
+		if (rdPeriodo.isSelected()) {
+			dtpInicio.setDisable(false);
+			dtpFim.setDisable(false);
+		}
 	}
 
 }

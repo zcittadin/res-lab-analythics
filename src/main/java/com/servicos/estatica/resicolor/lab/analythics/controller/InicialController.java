@@ -129,7 +129,7 @@ public class InicialController implements Initializable, ControlledScreen {
 		Task<Void> searchTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				provasRecentes = FXCollections.observableList((List<Prova>) provaDAO.findRecentes());
+				provasRecentes = FXCollections.observableList((List<Prova>) provaDAO.findRecentes(8));
 				return null;
 			}
 		};

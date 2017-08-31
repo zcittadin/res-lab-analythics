@@ -5,9 +5,7 @@ import java.util.ResourceBundle;
 
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 
 public class ComparacaoController implements Initializable {
 
