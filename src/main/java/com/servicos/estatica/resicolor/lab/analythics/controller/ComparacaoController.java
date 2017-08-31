@@ -8,7 +8,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -61,7 +60,8 @@ public class ComparacaoController implements Initializable {
 	private static AmostraDAO amostraDAO = new AmostraDAO();
 	private static List<Leitura> leituras1 = new ArrayList<>();
 	private static List<Leitura> leituras2 = new ArrayList<>();
-	private static List<Amostra> amostras = new ArrayList<>();
+	private static List<Amostra> amostras1 = new ArrayList<>();
+	private static List<Amostra> amostras2 = new ArrayList<>();
 
 	private Prova prova1;
 	private Prova prova2;
@@ -114,8 +114,31 @@ public class ComparacaoController implements Initializable {
 				alert.showAndWait();
 			}
 		});
-		Thread t = new Thread(leiturasTask);
-		t.start();
+		Thread t1 = new Thread(leiturasTask);
+		t1.start();
+
+		Task<Void> amostrasTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				amostras1 = FXCollections.observableList((List<Amostra>) amostraDAO.findAmostraByProva(prova1));
+				return null;
+			}
+		};
+
+		amostrasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				if (!amostras1.isEmpty()) {
+					amostras1.forEach(a -> {
+						System.out.println(a.getDescricao());
+					});
+					// populateTableAmostras();
+				}
+			}
+
+		});
+		Thread t2 = new Thread(amostrasTask);
+		t2.start();
 	}
 
 	private void consultarSingle2() {
@@ -144,8 +167,31 @@ public class ComparacaoController implements Initializable {
 				alert.showAndWait();
 			}
 		});
-		Thread t = new Thread(leiturasTask);
-		t.start();
+		Thread t1 = new Thread(leiturasTask);
+		t1.start();
+
+		Task<Void> amostrasTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				amostras2 = FXCollections.observableList((List<Amostra>) amostraDAO.findAmostraByProva(prova2));
+				return null;
+			}
+		};
+
+		amostrasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				if (!amostras2.isEmpty()) {
+					amostras2.forEach(a -> {
+						System.out.println(a.getDescricao());
+					});
+					// populateTableAmostras();
+				}
+			}
+
+		});
+		Thread t2 = new Thread(amostrasTask);
+		t2.start();
 	}
 
 	private void consultarComparative() {
@@ -222,7 +268,6 @@ public class ComparacaoController implements Initializable {
 			public void run() {
 				((Node) chartLeituras.lookupAll(".chart-legend-item-symbol").toArray()[0])
 						.setStyle("-fx-background-color: red");
-
 			}
 		});
 	}
