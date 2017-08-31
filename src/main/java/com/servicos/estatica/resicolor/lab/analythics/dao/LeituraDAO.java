@@ -17,6 +17,7 @@ public class LeituraDAO {
 		session.beginTransaction();
 		Query queryProva = session.createQuery("SELECT p FROM Prova p WHERE id = :idProva");
 		queryProva.setParameter("idProva", prova.getId());
+		prova = (Prova) queryProva.getSingleResult();
 		session.close();
 		return prova.getLeituras();
 	}

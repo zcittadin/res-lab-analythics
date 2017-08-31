@@ -3,6 +3,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,22 +19,23 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart animated="false" layoutY="44.0" prefHeight="508.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x tempo">
+                        <LineChart fx:id="chartLeituras" animated="false" createSymbols="false" layoutY="44.0" legendVisible="false" prefHeight="508.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x tempo">
                           <xAxis>
-                            <CategoryAxis animated="false" side="BOTTOM" tickLabelFill="#09156f">
+                            <CategoryAxis animated="false" gapStartAndEnd="false" side="BOTTOM" tickLabelFill="#09156f" fx:id="xAxis">
                                  <tickLabelFont>
                                     <Font size="12.0" />
                                  </tickLabelFont>
                               </CategoryAxis>
                           </xAxis>
                           <yAxis>
-                            <NumberAxis label="ºC" side="LEFT" tickLabelFill="#09156f">
+                            <NumberAxis fx:id="yAxis" label="ºC" side="LEFT" tickLabelFill="#09156f">
                                  <tickLabelFont>
                                     <Font size="17.0" />
                                  </tickLabelFont>
                               </NumberAxis>
                           </yAxis>
                         </LineChart>
+                        <CheckBox fx:id="chkMarcadores" layoutX="1121.0" layoutY="27.0" mnemonicParsing="false" onAction="#toggleMarks" text="Visualizar marcadores" textFill="#09156f" />
                      </children></AnchorPane>
             </content>
           </Tab>

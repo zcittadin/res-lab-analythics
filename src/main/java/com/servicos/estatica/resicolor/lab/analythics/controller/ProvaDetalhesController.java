@@ -30,10 +30,12 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 
 @SuppressWarnings("rawtypes")
@@ -115,6 +117,15 @@ public class ProvaDetalhesController implements Initializable {
 				}
 			}
 
+		});
+		leiturasTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Falha");
+				alert.setHeaderText("Ocorreu um erro ao consultar os dados.");
+				alert.showAndWait();
+			}
 		});
 		Thread t1 = new Thread(leiturasTask);
 		t1.start();
