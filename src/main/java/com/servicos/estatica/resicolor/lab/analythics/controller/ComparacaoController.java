@@ -207,7 +207,7 @@ public class ComparacaoController implements Initializable {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
 				if (leituras1 != null && leituras2 != null) {
-					populateComparative();
+					populateChartComparative();
 				}
 			}
 
@@ -245,11 +245,9 @@ public class ComparacaoController implements Initializable {
 		tempSeries2 = new XYChart.Series<String, Number>();
 		if (prova1 != null) {
 			plotValuesList.add(tempSeries1);
-
 		}
 		if (prova2 != null) {
 			plotValuesList.add(tempSeries2);
-
 		}
 		chartLeituras.setData(plotValuesList);
 	}
@@ -272,7 +270,7 @@ public class ComparacaoController implements Initializable {
 		});
 	}
 
-	private void populateComparative() {
+	private void populateChartComparative() {
 		if (leituras1.size() >= leituras2.size()) {
 			LocalDateTime inicio = leituras1.get(0).getDtProc().toInstant().atZone(ZoneId.systemDefault())
 					.toLocalDateTime();
