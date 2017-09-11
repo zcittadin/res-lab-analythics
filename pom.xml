@@ -48,5 +48,10 @@
 			<artifactId>poi</artifactId>
 			<version>3.15</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.dynamicreports</groupId>
+			<artifactId>dynamicreports-core</artifactId>
+			<version>4.1.0</version>
+		</dependency>
 	</dependencies>
 </project>

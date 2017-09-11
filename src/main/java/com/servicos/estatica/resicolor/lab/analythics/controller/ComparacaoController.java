@@ -26,6 +26,7 @@ import com.servicos.estatica.resicolor.lab.analythics.dao.LeituraDAO;
 import com.servicos.estatica.resicolor.lab.analythics.model.Amostra;
 import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
+import com.servicos.estatica.resicolor.lab.analythics.report.AnaliseReportBuilder;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
 import javafx.application.Platform;
@@ -45,17 +46,17 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 @SuppressWarnings("rawtypes")
 public class ComparacaoController implements Initializable {
@@ -151,7 +152,7 @@ public class ComparacaoController implements Initializable {
 	public void setContext(Prova pr1, Prova pr2) {
 		prova1 = pr1;
 		prova2 = pr2;
-		if(prova1 == null && prova2 == null) {
+		if (prova1 == null && prova2 == null) {
 			btXls.setDisable(true);
 			btPdf.setDisable(true);
 		}
@@ -799,6 +800,57 @@ public class ComparacaoController implements Initializable {
 		});
 		// progReport.progressProperty().bind(xlsTask.progressProperty());
 		Thread t = new Thread(xlsTask);
+		t.start();
+	}
+
+	@FXML
+	public void saveReport() {
+		Stage stage = new Stage();
+		stage.initOwner(tblAmostras1.getScene().getWindow());
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
+		fileChooser.setTitle("Salvar relatório");
+		// fileChooser.setInitialFileName("lote_" + produto.getLote() + ".pdf");
+		File savedFile = fileChooser.showSaveDialog(stage);
+		if (savedFile != null) {
+			generatePdfReport(savedFile);
+		}
+	}
+
+	private void generatePdfReport(File file) {
+		Task<Void> reportTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				AnaliseReportBuilder.buildSingle(prova1, file.getAbsolutePath());
+				return null;
+			}
+		};
+
+		reportTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Concluído");
+				alert.setHeaderText("Relatório emitido com sucesso. Deseja visualizar?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
+
+		reportTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		Thread t = new Thread(reportTask);
 		t.start();
 	}
 
