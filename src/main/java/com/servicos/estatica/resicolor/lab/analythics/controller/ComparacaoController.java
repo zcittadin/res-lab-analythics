@@ -1,5 +1,9 @@
 package com.servicos.estatica.resicolor.lab.analythics.controller;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -10,7 +14,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.servicos.estatica.resicolor.lab.analythics.dao.AmostraDAO;
 import com.servicos.estatica.resicolor.lab.analythics.dao.LeituraDAO;
@@ -36,8 +45,13 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
@@ -106,10 +120,14 @@ public class ComparacaoController implements Initializable {
 	private NumberAxis yAxis;
 	@FXML
 	private CheckBox chkMarcadores;
+	@FXML
+	private Button btXls;
+	@FXML
+	private Button btPdf;
 
 	private static DateTimeFormatter dataHoraFormatter = DateTimeFormatter.ofPattern("HH:mm:ss - dd/MM/yy");
 	private static DateTimeFormatter horasFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
+	private static SimpleDateFormat dataHoraSdf = new SimpleDateFormat("dd/MM/YYYY HH:mm:ss");
 	private static XYChart.Series<String, Number> tempSeries1;
 	private static XYChart.Series<String, Number> tempSeries2;
 	final ObservableList<XYChart.Series<String, Number>> plotValuesList = FXCollections.observableArrayList();
@@ -133,6 +151,10 @@ public class ComparacaoController implements Initializable {
 	public void setContext(Prova pr1, Prova pr2) {
 		prova1 = pr1;
 		prova2 = pr2;
+		if(prova1 == null && prova2 == null) {
+			btXls.setDisable(true);
+			btPdf.setDisable(true);
+		}
 		configLineChart();
 		if (prova1 != null && prova2 != null) {
 			consultarComparative();
@@ -678,6 +700,106 @@ public class ComparacaoController implements Initializable {
 		} else {
 			mark.setVisible(Boolean.FALSE);
 		}
+	}
+
+	@FXML
+	public void saveXls() {
+		Stage stage = new Stage();
+		stage.initOwner(tblAmostras1.getScene().getWindow());
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("XLS Files", "*.xls"));
+		fileChooser.setTitle("Salvar planilha de processo");
+		// fileChooser.setInitialFileName("lote_" + produto.getLote() + ".xls");
+		File savedFile = fileChooser.showSaveDialog(stage);
+		if (savedFile != null) {
+			generateXlsReport(savedFile);
+		}
+	}
+
+	@SuppressWarnings("resource")
+	private void generateXlsReport(File file) {
+		Task<Void> xlsTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				int maximum = 20;
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				HSSFSheet firstSheet = workbook.createSheet("Aba1");
+				FileOutputStream fos = null;
+				try {
+					fos = new FileOutputStream(file);
+					int line = 0;
+					if (prova1 != null) {
+						HSSFRow headerRowA = firstSheet.createRow(line);
+						headerRowA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
+						line++;
+						HSSFRow titleRowA = firstSheet.createRow(line);
+						line++;
+						titleRowA.createCell(0).setCellValue("Horário");
+						titleRowA.createCell(1).setCellValue("Temperatura");
+						titleRowA.createCell(2).setCellValue("Set-point");
+						for (Leitura leitura : leituras1) {
+							HSSFRow rowA = firstSheet.createRow(line);
+							rowA.createCell(0).setCellValue(dataHoraSdf.format(leitura.getDtProc()));
+							rowA.createCell(1).setCellValue(leitura.getTemp());
+							rowA.createCell(2).setCellValue(leitura.getSp());
+							line++;
+						}
+					}
+					if (prova2 != null) {
+						HSSFRow headerRowB = firstSheet.createRow(line);
+						headerRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
+						line++;
+						HSSFRow titleRowB = firstSheet.createRow(line);
+						line++;
+						titleRowB.createCell(0).setCellValue("Horário");
+						titleRowB.createCell(1).setCellValue("Temperatura");
+						titleRowB.createCell(2).setCellValue("Set-point");
+						for (Leitura leitura : leituras2) {
+							HSSFRow rowB = firstSheet.createRow(line);
+							rowB.createCell(0).setCellValue(dataHoraSdf.format(leitura.getDtProc()));
+							rowB.createCell(1).setCellValue(leitura.getTemp());
+							rowB.createCell(2).setCellValue(leitura.getSp());
+							line++;
+						}
+					}
+					workbook.write(fos);
+					for (int i = 0; i < maximum; i++) {
+						updateProgress(i, maximum);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Erro ao exportar arquivo");
+				} finally {
+					try {
+						fos.flush();
+						fos.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return null;
+			}
+		};
+
+		xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Concluído");
+				alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
+		// progReport.progressProperty().bind(xlsTask.progressProperty());
+		Thread t = new Thread(xlsTask);
+		t.start();
 	}
 
 }

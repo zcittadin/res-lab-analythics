@@ -43,5 +43,10 @@
 			<artifactId>Medusa</artifactId>
 			<version>7.5</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -70,7 +70,7 @@
 }
 
 .btStyleReport {
-  -fx-graphic: url('layout.png');
+  -fx-graphic: url('Report.png');
 }
 
 .btStyleUp {
@@ -95,4 +95,8 @@
 
 .btStyleEye {
   -fx-graphic: url('Eye.png');
+}
+
+.btStyleTable {
+  -fx-graphic: url('Table.png');
 }
