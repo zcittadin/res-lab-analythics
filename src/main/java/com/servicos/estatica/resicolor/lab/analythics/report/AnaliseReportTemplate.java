@@ -25,6 +25,7 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.style.FontBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.builder.tableofcontents.TableOfContentsCustomizerBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.TimePeriod;
 import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
@@ -151,4 +152,16 @@ public class AnaliseReportTemplate {
 						// .setStyle(boldStyle)
 						.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT)));
 	}
+	
+	public static ComponentBuilder<?, ?> createTitleComponent(String label) {
+		      return cmp.horizontalList()
+		              .add(
+		               //dynamicReportsComponent,
+		               cmp.text(label).setStyle(bold18CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+		              .newRow()
+		              .add(cmp.line())
+		              .newRow()
+		              .add(cmp.verticalGap(10));
+		   }
+
 }
