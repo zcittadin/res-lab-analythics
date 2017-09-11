@@ -260,7 +260,7 @@ public class ComparacaoController implements Initializable {
 		leiturasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				if (leituras1 != null && leituras2 != null) {
+				if ((leituras1 != null && !leituras1.isEmpty()) && (leituras2 != null && !leituras2.isEmpty())) {
 					populateChartComparative();
 				}
 			}
@@ -290,10 +290,12 @@ public class ComparacaoController implements Initializable {
 		amostrasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				// if (!amostras2.isEmpty()) {
-				populateTableAmostras1();
-				populateTableAmostras2();
-				// }
+				if (amostras1 != null && !amostras1.isEmpty()) {
+					populateTableAmostras1();
+				}
+				if (amostras2 != null && !amostras2.isEmpty()) {
+					populateTableAmostras2();
+				}
 			}
 
 		});
