@@ -1,6 +1,7 @@
 package com.servicos.estatica.resicolor.lab.analythics.controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,6 +20,8 @@ import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -34,10 +37,67 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.util.Callback;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
+@SuppressWarnings("rawtypes")
 public class ComparacaoController implements Initializable {
 
+	@FXML
+	private TableView tblAmostras1;
+	@FXML
+	private TableColumn colHorario1;
+	@FXML
+	private TableColumn colTemp1;
+	@FXML
+	private TableColumn colSetPoint1;
+	@FXML
+	private TableColumn colIAsobreNV1;
+	@FXML
+	private TableColumn colViscGardner1;
+	@FXML
+	private TableColumn colCorGardner1;
+	@FXML
+	private TableColumn colNv1;
+	@FXML
+	private TableColumn colGelTime1;
+	@FXML
+	private TableColumn colAgua1;
+	@FXML
+	private TableColumn colAmostra1;
+	@FXML
+	private TableColumn colPh1;
+	@FXML
+	private TableColumn colDescricao1;
+	@FXML
+	private TableView tblAmostras2;
+	@FXML
+	private TableColumn colHorario2;
+	@FXML
+	private TableColumn colTemp2;
+	@FXML
+	private TableColumn colSetPoint2;
+	@FXML
+	private TableColumn colIAsobreNV2;
+	@FXML
+	private TableColumn colViscGardner2;
+	@FXML
+	private TableColumn colCorGardner2;
+	@FXML
+	private TableColumn colNv2;
+	@FXML
+	private TableColumn colGelTime2;
+	@FXML
+	private TableColumn colAgua2;
+	@FXML
+	private TableColumn colAmostra2;
+	@FXML
+	private TableColumn colPh2;
+	@FXML
+	private TableColumn colDescricao2;
 	@FXML
 	private LineChart<String, Number> chartLeituras;
 	@FXML
@@ -60,8 +120,8 @@ public class ComparacaoController implements Initializable {
 	private static AmostraDAO amostraDAO = new AmostraDAO();
 	private static List<Leitura> leituras1 = new ArrayList<>();
 	private static List<Leitura> leituras2 = new ArrayList<>();
-	private static List<Amostra> amostras1 = new ArrayList<>();
-	private static List<Amostra> amostras2 = new ArrayList<>();
+	private static ObservableList<Amostra> amostras1 = FXCollections.observableArrayList();
+	private static ObservableList<Amostra> amostras2 = FXCollections.observableArrayList();
 
 	private Prova prova1;
 	private Prova prova2;
@@ -129,10 +189,7 @@ public class ComparacaoController implements Initializable {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
 				if (!amostras1.isEmpty()) {
-					amostras1.forEach(a -> {
-						System.out.println(a.getDescricao());
-					});
-					// populateTableAmostras();
+					populateTableAmostras1();
 				}
 			}
 
@@ -182,10 +239,7 @@ public class ComparacaoController implements Initializable {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
 				if (!amostras2.isEmpty()) {
-					amostras2.forEach(a -> {
-						System.out.println(a.getDescricao());
-					});
-					// populateTableAmostras();
+					populateTableAmostras2();
 				}
 			}
 
@@ -221,8 +275,30 @@ public class ComparacaoController implements Initializable {
 				alert.showAndWait();
 			}
 		});
-		Thread t = new Thread(leiturasTask);
-		t.start();
+		Thread t1 = new Thread(leiturasTask);
+		t1.start();
+
+		Task<Void> amostrasTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				amostras1 = FXCollections.observableList((List<Amostra>) amostraDAO.findAmostraByProva(prova1));
+				amostras2 = FXCollections.observableList((List<Amostra>) amostraDAO.findAmostraByProva(prova2));
+				return null;
+			}
+		};
+
+		amostrasTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				// if (!amostras2.isEmpty()) {
+				populateTableAmostras1();
+				populateTableAmostras2();
+				// }
+			}
+
+		});
+		Thread t2 = new Thread(amostrasTask);
+		t2.start();
 	}
 
 	@FXML
@@ -338,6 +414,256 @@ public class ComparacaoController implements Initializable {
 
 			}
 		});
+	}
+
+	@SuppressWarnings("unchecked")
+	private void populateTableAmostras1() {
+		tblAmostras1.setItems(amostras1);
+		colHorario1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject;
+						simpleObject = new SimpleObjectProperty<String>(
+								new SimpleDateFormat("HH:mm:ss").format(a.getHorario()));
+						return simpleObject;
+					}
+				});
+		colTemp1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getTemp());
+						return simpleObject;
+					}
+				});
+		colSetPoint1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getSetPoint());
+						return simpleObject;
+					}
+				});
+		colIAsobreNV1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getIaSobreNv());
+						return simpleObject;
+					}
+				});
+		colViscGardner1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								a.getViscGardner());
+						return simpleObject;
+					}
+				});
+		colCorGardner1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								// "");
+								a.getCorGardner());
+						return simpleObject;
+					}
+				});
+		colNv1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getPercentualNv());
+						return simpleObject;
+					}
+				});
+		colGelTime1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Integer>, ObservableValue<Integer>>() {
+					public ObservableValue<Integer> call(CellDataFeatures<Amostra, Integer> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Integer> simpleObject = new SimpleObjectProperty<Integer>(
+								a.getGelTime());
+						return simpleObject;
+					}
+				});
+		colAgua1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getAgua());
+						return simpleObject;
+					}
+				});
+		colAmostra1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getAmostra());
+						return simpleObject;
+					}
+				});
+		colPh1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getPh());
+						return simpleObject;
+					}
+				});
+		colDescricao1.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								a.getDescricao());
+						return simpleObject;
+					}
+				});
+
+		colAgua1.setStyle("-fx-alignment: CENTER;");
+		colAmostra1.setStyle("-fx-alignment: CENTER;");
+		colCorGardner1.setStyle("-fx-alignment: CENTER;");
+		colDescricao1.setStyle("-fx-alignment: CENTER;");
+		colGelTime1.setStyle("-fx-alignment: CENTER;");
+		colHorario1.setStyle("-fx-alignment: CENTER;");
+		colIAsobreNV1.setStyle("-fx-alignment: CENTER;");
+		colNv1.setStyle("-fx-alignment: CENTER;");
+		colPh1.setStyle("-fx-alignment: CENTER;");
+		colSetPoint1.setStyle("-fx-alignment: CENTER;");
+		colTemp1.setStyle("-fx-alignment: CENTER;");
+		colViscGardner1.setStyle("-fx-alignment: CENTER;");
+	}
+
+	@SuppressWarnings("unchecked")
+	private void populateTableAmostras2() {
+		tblAmostras2.setItems(amostras2);
+		colHorario2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject;
+						simpleObject = new SimpleObjectProperty<String>(
+								new SimpleDateFormat("HH:mm:ss").format(a.getHorario()));
+						return simpleObject;
+					}
+				});
+		colTemp2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getTemp());
+						return simpleObject;
+					}
+				});
+		colSetPoint2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getSetPoint());
+						return simpleObject;
+					}
+				});
+		colIAsobreNV2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getIaSobreNv());
+						return simpleObject;
+					}
+				});
+		colViscGardner2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								a.getViscGardner());
+						return simpleObject;
+					}
+				});
+		colCorGardner2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								// "");
+								a.getCorGardner());
+						return simpleObject;
+					}
+				});
+		colNv2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getPercentualNv());
+						return simpleObject;
+					}
+				});
+		colGelTime2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Integer>, ObservableValue<Integer>>() {
+					public ObservableValue<Integer> call(CellDataFeatures<Amostra, Integer> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Integer> simpleObject = new SimpleObjectProperty<Integer>(
+								a.getGelTime());
+						return simpleObject;
+					}
+				});
+		colAgua2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getAgua());
+						return simpleObject;
+					}
+				});
+		colAmostra2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(
+								a.getAmostra());
+						return simpleObject;
+					}
+				});
+		colPh2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, Double>, ObservableValue<Double>>() {
+					public ObservableValue<Double> call(CellDataFeatures<Amostra, Double> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<Double> simpleObject = new SimpleObjectProperty<Double>(a.getPh());
+						return simpleObject;
+					}
+				});
+		colDescricao2.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
+						final Amostra a = cell.getValue();
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
+								a.getDescricao());
+						return simpleObject;
+					}
+				});
+
+		colAgua2.setStyle("-fx-alignment: CENTER;");
+		colAmostra2.setStyle("-fx-alignment: CENTER;");
+		colCorGardner2.setStyle("-fx-alignment: CENTER;");
+		colDescricao2.setStyle("-fx-alignment: CENTER;");
+		colGelTime2.setStyle("-fx-alignment: CENTER;");
+		colHorario2.setStyle("-fx-alignment: CENTER;");
+		colIAsobreNV2.setStyle("-fx-alignment: CENTER;");
+		colNv2.setStyle("-fx-alignment: CENTER;");
+		colPh2.setStyle("-fx-alignment: CENTER;");
+		colSetPoint2.setStyle("-fx-alignment: CENTER;");
+		colTemp2.setStyle("-fx-alignment: CENTER;");
+		colViscGardner2.setStyle("-fx-alignment: CENTER;");
 	}
 
 	private void createLineMark(List<Node> nodes, Data<String, Number> data, Double value, String color) {

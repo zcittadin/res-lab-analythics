@@ -45,14 +45,34 @@
                      <children>
                         <TableView fx:id="tblAmostras1" layoutX="16.0" layoutY="61.0" prefHeight="200.0" prefWidth="1252.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="colHorario1" prefWidth="112.0" text="Horário" />
+                            <TableColumn fx:id="colTemp1" prefWidth="67.0" text="°C" />
+                              <TableColumn fx:id="colSetPoint1" prefWidth="93.0" text="Set-point" />
+                              <TableColumn fx:id="colIAsobreNV1" prefWidth="109.0" text="IA sobre NV" />
+                              <TableColumn fx:id="colViscGardner1" prefWidth="112.0" text="Visc. Gardner" />
+                              <TableColumn fx:id="colCorGardner1" prefWidth="89.0" text="Cor Gardner" />
+                              <TableColumn fx:id="colNv1" prefWidth="74.0" text="NV%" />
+                              <TableColumn fx:id="colGelTime1" prefWidth="95.0" text="Gel time (seg)" />
+                              <TableColumn fx:id="colAgua1" prefWidth="92.0" text="Água (ml)" />
+                              <TableColumn fx:id="colAmostra1" prefWidth="91.0" text="Amostra (g)" />
+                              <TableColumn fx:id="colPh1" prefWidth="66.0" text="PH" />
+                              <TableColumn fx:id="colDescricao1" prefWidth="251.0" text="Descrição do processo" />
                           </columns>
                         </TableView>
                         <TableView fx:id="tblAmostras2" layoutX="16.0" layoutY="327.0" prefHeight="200.0" prefWidth="1252.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
+                              <TableColumn fx:id="colHorario2" prefWidth="112.0" text="Horário" />
+                              <TableColumn fx:id="colTemp2" prefWidth="67.0" text="°C" />
+                              <TableColumn fx:id="colSetPoint2" prefWidth="93.0" text="Set-point" />
+                              <TableColumn fx:id="colIAsobreNV2" prefWidth="109.0" text="IA sobre NV" />
+                              <TableColumn fx:id="colViscGardner2" prefWidth="112.0" text="Visc. Gardner" />
+                              <TableColumn fx:id="colCorGardner2" prefWidth="89.0" text="Cor Gardner" />
+                              <TableColumn fx:id="colNv2" prefWidth="74.0" text="NV%" />
+                              <TableColumn fx:id="colGelTime2" prefWidth="95.0" text="Gel time (seg)" />
+                              <TableColumn fx:id="colAgua2" prefWidth="92.0" text="Água (ml)" />
+                              <TableColumn fx:id="colAmostra2" prefWidth="91.0" text="Amostra (g)" />
+                              <TableColumn fx:id="colPh2" prefWidth="66.0" text="PH" />
+                              <TableColumn fx:id="colDescricao2" prefWidth="251.0" text="Descrição do processo" />
                            </columns>
                         </TableView>
                      </children></AnchorPane>
