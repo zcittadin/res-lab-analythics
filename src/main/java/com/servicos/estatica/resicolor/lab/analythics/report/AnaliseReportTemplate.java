@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
+import com.servicos.estatica.resicolor.lab.analythics.util.EnsaioUtil;
 
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.chart.TimeSeriesChartBuilder;
@@ -91,11 +92,27 @@ public class AnaliseReportTemplate {
 				cmp.verticalList(
 						cmp.text("Relatório de ensaio laboratorial").setStyle(bold18CenteredStyle)
 								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300),
-						cmp.text("Prova " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
+						cmp.text("Projeto: " + prova.getProjeto().getNome()).setStyle(boldStyle.setFontSize(12))
 								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-						cmp.text(prova.getBalao()).setStyle(boldStyle.setFontSize(12))
+						cmp.text("Prova: " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
 								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
 				cmp.horizontalGap(10)));
+	}
+	
+	public static ComponentBuilder<?, ?> createDadosComponent(Prova prova, String periodo, String producao) {
+		return cmp.horizontalList(
+				cmp.verticalList(
+						cmp.text("Data de produção: " + dataSdf.format(prova.getDhInicial())),
+						cmp.text("Produto: " + prova.getProduto()),
+						cmp.text("Balão: " + prova.getBalao())),
+				cmp.verticalList(
+						cmp.text("Horário de início: " + horasSdf.format(prova.getDhInicial())),
+						cmp.text("Horário de encerramento: " + horasSdf.format(prova.getDhFinal())),
+						cmp.text("Tempo decorrido: " + EnsaioUtil.formatPeriod(prova.getDhInicial(), prova.getDhFinal()))),
+				cmp.verticalList(
+						cmp.text("Executor: " + (prova.getExecutor())),
+						cmp.text("Temperatura mínima: " + EnsaioUtil.getTempMin(prova) + " ºC"),
+						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC")));
 	}
 	
 	public static ComponentBuilder<?, ?> createSeparatorComponent() {

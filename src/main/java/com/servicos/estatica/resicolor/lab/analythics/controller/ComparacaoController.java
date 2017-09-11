@@ -798,6 +798,15 @@ public class ComparacaoController implements Initializable {
 				}
 			}
 		});
+		xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erro");
+				alert.setHeaderText("Houve uma falha na geração do arquivo.");
+				alert.showAndWait();
+			}
+		});
 		// progReport.progressProperty().bind(xlsTask.progressProperty());
 		Thread t = new Thread(xlsTask);
 		t.start();
@@ -821,7 +830,15 @@ public class ComparacaoController implements Initializable {
 		Task<Void> reportTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
-				AnaliseReportBuilder.buildSingle(prova1, file.getAbsolutePath());
+				if (prova1 != null && prova2 == null) {
+					AnaliseReportBuilder.buildSingle(prova1, file.getAbsolutePath());
+					return null;
+				}
+				if (prova2 != null && prova1 == null) {
+					AnaliseReportBuilder.buildSingle(prova2, file.getAbsolutePath());
+					return null;
+				}
+				AnaliseReportBuilder.buildComparative(prova1, prova2, file.getAbsolutePath());
 				return null;
 			}
 		};
@@ -846,8 +863,10 @@ public class ComparacaoController implements Initializable {
 		reportTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				// TODO Auto-generated method stub
-
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erro");
+				alert.setHeaderText("Houve uma falha na emissão do relatório.");
+				alert.showAndWait();
 			}
 		});
 		Thread t = new Thread(reportTask);

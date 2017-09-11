@@ -26,17 +26,18 @@ public class AnaliseReportBuilder {
 			report().setTemplate(AnaliseReportTemplate.reportTemplate)
 					.title(AnaliseReportTemplate.createHeaderComponent(prova),
 							AnaliseReportTemplate.createSeparatorComponent(),
-							AnaliseReportTemplate.createChartComponent(prova))
+							AnaliseReportTemplate.createDadosComponent(prova, null, null),
+							AnaliseReportTemplate.createSeparatorComponent(),
+							AnaliseReportTemplate.createChartComponent(prova),
+							AnaliseReportTemplate.createSeparatorComponent())
 					.setDataSource(prova.getLeituras()).columns(dataHoraColumn, temperaturaColumn, setPointColumn)
-					.summary(AnaliseReportTemplate.createEmissaoComponent())
-					.toPdf(pdfExporter);
+					.summary(AnaliseReportTemplate.createEmissaoComponent()).toPdf(pdfExporter);
 		} catch (DRException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	public static void buildComparative() {
+	public static void buildComparative(Prova prova1, Prova prova2, String path) {
 
 	}
 }
