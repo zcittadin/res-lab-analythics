@@ -10,9 +10,9 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
@@ -29,7 +29,7 @@ import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.TimePeriod;
 import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
 
-public class AnaliseReportTemplate {
+public class AnaliseComparativaReportTemplate {
 
 	public static final StyleBuilder rootStyle;
 	public static final StyleBuilder boldStyle;
@@ -84,71 +84,70 @@ public class AnaliseReportTemplate {
 		footerComponent = cmp.pageNumber().setStyle(stl.style(boldCenteredStyle).setTopBorder(stl.pen1Point()));
 	}
 
-	public static ComponentBuilder<?, ?> createHeaderComponent(Prova prova) {
+	public static ComponentBuilder<?, ?> createHeaderComponent(Prova prova1, Prova prova2) {
 		return cmp.horizontalList().add(cmp.horizontalList(
-				cmp.image(AnaliseReportTemplate.class.getResource(
+				cmp.image(AnaliseComparativaReportTemplate.class.getResource(
 						"/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png")).setFixedDimension(80, 80),
 				cmp.horizontalGap(10),
-				cmp.verticalList(
-						cmp.text("Relatório de ensaio laboratorial").setStyle(bold18CenteredStyle)
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300),
-						cmp.text("Projeto: " + prova.getProjeto().getNome()).setStyle(boldStyle.setFontSize(12))
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-						cmp.text("Prova: " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
+				cmp.verticalList(cmp.text("Relatório comparativo").setStyle(bold18CenteredStyle)
+						.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
 				cmp.horizontalGap(10)));
 	}
 	
 	public static ComponentBuilder<?, ?> createDadosComponent(Prova prova) {
 		return cmp.horizontalList(
 				cmp.verticalList(
-						cmp.text("Data de realização: " + dataSdf.format(prova.getDhInicial())),
+						cmp.text("Projeto " + prova.getProjeto().getNome()),
+						cmp.text("Prova: " + prova.getNomeProva()),
 						cmp.text("Produto: " + prova.getProduto()),
-						cmp.text("Balão: " + prova.getBalao())),
-				cmp.verticalList(
+						cmp.text("Data de realização: " + dataSdf.format(prova.getDhInicial()))),
+				cmp.verticalList(cmp.text("Balão: " + prova.getBalao()),
 						cmp.text("Horário de início: " + horasSdf.format(prova.getDhInicial())),
 						cmp.text("Horário de encerramento: " + horasSdf.format(prova.getDhFinal())),
 						cmp.text("Tempo decorrido: " + EnsaioUtil.formatPeriod(prova.getDhInicial(), prova.getDhFinal()))),
-				cmp.verticalList(
-						cmp.text("Executor: " + (prova.getExecutor())),
+				cmp.verticalList(cmp.text(""),
 						cmp.text("Temperatura mínima: " + EnsaioUtil.getTempMin(prova) + " ºC"),
-						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC")));
+						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"),
+//						cmp.text("Set-point: " + produto.getProcessos().get(0).getSpReator() + " ºC"),
+						cmp.text("Executor: " + prova.getExecutor())));
 	}
 	
-	public static ComponentBuilder<?, ?> createSeparatorComponent() {
-		return separatorComponent;
+	public static ComponentBuilder<?, ?> createChartComponent(List<AnaliseComparativaModel> models, String prova1, String prova2) {
+		return cmp.horizontalList(createLineChart(models, prova1, prova2));
 	}
 	
-	public static ComponentBuilder<?, ?> createChartComponent(Prova prova) {
-		return cmp.horizontalList(createLineChart(prova));
-	}
-	
-	private static TimeSeriesChartBuilder createLineChart(Prova prova) {
+	private static TimeSeriesChartBuilder createLineChart(List<AnaliseComparativaModel> models, String prova1, String prova2) {
 		FontBuilder boldFont = stl.fontArialBold().setFontSize(10);
-		TextColumnBuilder<Date> horarioColumn = col.column("Horário", "dtProc", type.dateYearToSecondType());
-		TextColumnBuilder<Double> tempColumn = col.column("Temperatura", "temp", type.doubleType());
-		return cht.timeSeriesChart()
+		TextColumnBuilder<Date> horarioColumn = col.column("Horário", "dtProc", type.dateDayType());
+		TextColumnBuilder<Double> temp1Column = col.column("Prova: " + prova1, 
+				"temp1", type.doubleType());
+		TextColumnBuilder<Double> temp2Column = col.column("Prova: " + prova2, 
+				"temp2", type.doubleType());
+		
+		TimeSeriesChartBuilder builder = cht.timeSeriesChart()
 				.setTitle("Temperatura x tempo")
 				.setTitleFont(boldFont)
 				.setShowShapes(false)
-				.seriesColors(Color.RED)
 				.setShowLegend(Boolean.TRUE)
 				.setTimePeriod(horarioColumn)
 				.setTimePeriodType(TimePeriod.SECOND)
-				.series(
-						cht.serie(tempColumn)
-				)
 				.setTimeAxisFormat(cht.axisFormat())
 				.setValueAxisFormat(
-						cht.axisFormat().setLabel("ºC").setRangeMaxValueExpression(350).setRangeMinValueExpression(0)
-				);
+						cht.axisFormat()
+						.setLabel("ºC")
+						.setRangeMaxValueExpression(350)
+						.setRangeMinValueExpression(0)
+						);
+		
+		return builder.series(
+				cht.serie(temp1Column),
+				cht.serie(temp2Column)
+				).seriesColors(Color.RED, Color.ORANGE);
+		
 	}
-	
-	public static ComponentBuilder<?, ?> createEmissaoComponent() {
-		return cmp.horizontalList(cmp.verticalList(separatorComponent,
-				cmp.text("Data de emissão: " + horasFormatter.format(LocalDateTime.now()))
-						.setStyle(stl.style().setFontSize(10))
-						// .setStyle(boldStyle)
-						.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT)));
+
+	public static ComponentBuilder<?, ?> createSeparatorComponent() {
+		return separatorComponent;
 	}
+
 }
