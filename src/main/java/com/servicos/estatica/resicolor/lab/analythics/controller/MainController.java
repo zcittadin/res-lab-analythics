@@ -66,7 +66,7 @@ public class MainController extends EstaticaInfoUtil implements Initializable {
 
 		rectClock.setFill(Color.TRANSPARENT);
 
-		imgCliente.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/resicolor.png"));
+		imgCliente.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png"));
 		imgClienteResizer = new ImageViewResizer(imgCliente, 126, 70);
 		imgClienteResizer.setLayoutX(16);
 		imgClienteResizer.setLayoutY(6);

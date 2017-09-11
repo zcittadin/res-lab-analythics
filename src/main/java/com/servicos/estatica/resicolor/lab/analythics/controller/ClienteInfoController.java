@@ -30,7 +30,7 @@ public class ClienteInfoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/resicolor.png"));
+		imgEstatica.setImage(new Image("/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png"));
 		rectMoldura.setFill(Color.TRANSPARENT);
 	}
 

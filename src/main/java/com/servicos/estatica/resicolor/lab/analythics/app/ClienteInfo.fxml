@@ -13,9 +13,9 @@
 <AnchorPane prefHeight="381.0" prefWidth="405.0" styleClass="myGradient" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servicos.estatica.resicolor.lab.analythics.controller.ClienteInfoController">
    <children>
       <Rectangle fx:id="rectMoldura" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="314.0" layoutX="11.0" layoutY="14.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="383.0" />
-      <ImageView fx:id="imgEstatica" fitHeight="195.0" fitWidth="192.0" layoutX="107.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+      <ImageView fx:id="imgEstatica" fitHeight="203.0" fitWidth="314.0" layoutX="46.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
-            <Image url="@../style/resicolor.png" />
+            <Image url="@../style/wtech.png" />
          </image>
       </ImageView>
       <Button fx:id="btVoltar" layoutX="179.0" layoutY="341.0" mnemonicParsing="false" onAction="#voltar" text="Voltar">
@@ -23,13 +23,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Hyperlink fx:id="linkEstatica" layoutX="142.0" layoutY="204.0" onAction="#openWebLink" text="www.resicolor.com.br" />
-      <Label layoutX="71.0" layoutY="238.0" text="Resicolor Indústria de Produtos Químicos Ltda." textFill="#09156f">
+      <Label layoutX="118.0" layoutY="238.0" text="WTech Indústria Química Ltda" textFill="#09156f">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="255.0" text="Rod. Padre Herval Fontanella, nº 580, Distrito Industrial" textFill="#09156f">
+      <Label layoutX="46.0" layoutY="255.0" text="Rod. Padre Herval Fontanella, nº 759, Distrito Industrial" textFill="#09156f">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -39,10 +38,12 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="132.0" layoutY="289.0" text="Telefone: (48) 3435-8000" textFill="#09156f">
+      <Label layoutX="75.0" layoutY="291.0" text="Telefones: (48) 3435-1424 ou (48) 3443-4222" textFill="#09156f">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="43.0" layoutX="46.0" layoutY="185.0" stroke="WHITE" strokeType="INSIDE" width="314.0" />
+      <Hyperlink fx:id="linkEstatica" layoutX="129.0" layoutY="195.0" onAction="#openWebLink" text="www.wtechquimica.com.br" />
    </children>
 </AnchorPane>
