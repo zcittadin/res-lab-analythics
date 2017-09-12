@@ -10,6 +10,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -118,7 +119,7 @@ public class AnaliseComparativaReportTemplate {
 	
 	private static TimeSeriesChartBuilder createLineChart(List<AnaliseComparativaModel> models, String prova1, String prova2) {
 		FontBuilder boldFont = stl.fontArialBold().setFontSize(10);
-		TextColumnBuilder<Date> horarioColumn = col.column("Horário", "dtProc", type.dateDayType());
+		TextColumnBuilder<Date> horarioColumn = col.column("Horário", "intervalo", type.dateDayType());
 		TextColumnBuilder<Double> temp1Column = col.column("Prova: " + prova1, 
 				"temp1", type.doubleType());
 		TextColumnBuilder<Double> temp2Column = col.column("Prova: " + prova2, 
@@ -148,6 +149,13 @@ public class AnaliseComparativaReportTemplate {
 
 	public static ComponentBuilder<?, ?> createSeparatorComponent() {
 		return separatorComponent;
+	}
+	
+	public static ComponentBuilder<?, ?> createEmissaoComponent() {
+		return cmp.horizontalList(cmp.verticalList(separatorComponent,
+				cmp.text("Data de emissão: " + horasFormatter.format(LocalDateTime.now()))
+						.setStyle(stl.style().setFontSize(10))
+						.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT)));
 	}
 
 }

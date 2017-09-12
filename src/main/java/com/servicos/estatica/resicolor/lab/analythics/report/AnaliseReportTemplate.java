@@ -153,15 +153,4 @@ public class AnaliseReportTemplate {
 						.setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT)));
 	}
 	
-	public static ComponentBuilder<?, ?> createTitleComponent(String label) {
-		      return cmp.horizontalList()
-		              .add(
-		               //dynamicReportsComponent,
-		               cmp.text(label).setStyle(bold18CenteredStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
-		              .newRow()
-		              .add(cmp.line())
-		              .newRow()
-		              .add(cmp.verticalGap(10));
-		   }
-
 }
