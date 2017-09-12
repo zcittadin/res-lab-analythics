@@ -50,9 +50,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.paint.Color;
 import javafx.scene.control.TableView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -61,6 +65,10 @@ import javafx.util.Callback;
 @SuppressWarnings("rawtypes")
 public class ComparacaoController implements Initializable {
 
+	@FXML
+	private Rectangle rect1;
+	@FXML
+	private TabPane tabMain;
 	@FXML
 	private TableView tblAmostras1;
 	@FXML
@@ -125,6 +133,8 @@ public class ComparacaoController implements Initializable {
 	private Button btXls;
 	@FXML
 	private Button btPdf;
+	@FXML
+	private ProgressIndicator progReport;
 
 	private static DateTimeFormatter dataHoraFormatter = DateTimeFormatter.ofPattern("HH:mm:ss - dd/MM/yy");
 	private static DateTimeFormatter horasFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -147,6 +157,7 @@ public class ComparacaoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		rect1.setFill(Color.TRANSPARENT);
 	}
 
 	public void setContext(Prova pr1, Prova pr2) {
@@ -710,7 +721,6 @@ public class ComparacaoController implements Initializable {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("XLS Files", "*.xls"));
 		fileChooser.setTitle("Salvar planilha de processo");
-		// fileChooser.setInitialFileName("lote_" + produto.getLote() + ".xls");
 		File savedFile = fileChooser.showSaveDialog(stage);
 		if (savedFile != null) {
 			generateXlsReport(savedFile);
@@ -719,6 +729,7 @@ public class ComparacaoController implements Initializable {
 
 	@SuppressWarnings("resource")
 	private void generateXlsReport(File file) {
+		initFetch();
 		Task<Void> xlsTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -785,6 +796,7 @@ public class ComparacaoController implements Initializable {
 		xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
+				endFetch();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Concluído");
 				alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
@@ -801,6 +813,7 @@ public class ComparacaoController implements Initializable {
 		xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
+				endFetch();
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erro");
 				alert.setHeaderText("Houve uma falha na geração do arquivo.");
@@ -827,6 +840,7 @@ public class ComparacaoController implements Initializable {
 	}
 
 	private void generatePdfReport(File file) {
+		initFetch();
 		Task<Void> reportTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -846,6 +860,7 @@ public class ComparacaoController implements Initializable {
 		reportTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
+				endFetch();
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Concluído");
 				alert.setHeaderText("Relatório emitido com sucesso. Deseja visualizar?");
@@ -863,6 +878,7 @@ public class ComparacaoController implements Initializable {
 		reportTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
+				endFetch();
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erro");
 				alert.setHeaderText("Houve uma falha na emissão do relatório.");
@@ -871,6 +887,24 @@ public class ComparacaoController implements Initializable {
 		});
 		Thread t = new Thread(reportTask);
 		t.start();
+	}
+
+	private void initFetch() {
+		tblAmostras1.setDisable(true);
+		tblAmostras2.setDisable(true);
+		chartLeituras.setDisable(true);
+		btPdf.setDisable(true);
+		btXls.setDisable(true);
+		progReport.setVisible(true);
+	}
+
+	private void endFetch() {
+		tblAmostras1.setDisable(false);
+		tblAmostras2.setDisable(false);
+		chartLeituras.setDisable(false);
+		btPdf.setDisable(false);
+		btXls.setDisable(false);
+		progReport.setVisible(false);
 	}
 
 }
