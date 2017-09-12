@@ -16,7 +16,6 @@ import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,13 +30,12 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 
 @SuppressWarnings("rawtypes")
@@ -177,7 +175,7 @@ public class ProvaDetalhesController implements Initializable {
 	private void configLineChart() {
 		yAxis.setAutoRanging(false);
 		yAxis.setLowerBound(0);
-		yAxis.setUpperBound(300);
+		yAxis.setUpperBound(350);
 		yAxis.setTickUnit(15);
 		tempSeries = new XYChart.Series<String, Number>();
 		plotValuesList.add(tempSeries);
