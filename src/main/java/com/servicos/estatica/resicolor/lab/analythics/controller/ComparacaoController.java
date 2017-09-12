@@ -50,6 +50,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -66,7 +67,13 @@ import javafx.util.Callback;
 public class ComparacaoController implements Initializable {
 
 	@FXML
-	private Rectangle rect1;
+	private Rectangle rectReport;
+	@FXML
+	private Rectangle rectProvas;
+	@FXML
+	private Label lblProva1;
+	@FXML
+	private Label lblProva2;
 	@FXML
 	private TabPane tabMain;
 	@FXML
@@ -157,7 +164,8 @@ public class ComparacaoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		rect1.setFill(Color.TRANSPARENT);
+		rectReport.setFill(Color.TRANSPARENT);
+		rectProvas.setFill(Color.TRANSPARENT);
 	}
 
 	public void setContext(Prova pr1, Prova pr2) {
@@ -166,17 +174,25 @@ public class ComparacaoController implements Initializable {
 		if (prova1 == null && prova2 == null) {
 			btXls.setDisable(true);
 			btPdf.setDisable(true);
+			lblProva1.setText("");
+			lblProva2.setText("");
 		}
 		configLineChart();
 		if (prova1 != null && prova2 != null) {
+			lblProva1.setText(prova1.getNomeProva());
+			lblProva2.setText(prova2.getNomeProva());
 			consultarComparative();
 			return;
 		}
 		if (prova1 != null) {
+			lblProva1.setText(prova1.getNomeProva());
+			lblProva2.setText("");
 			consultarSingle1();
 			return;
 		}
 		if (prova2 != null) {
+			lblProva1.setText(prova2.getNomeProva());
+			lblProva2.setText("");
 			consultarSingle2();
 			return;
 		}

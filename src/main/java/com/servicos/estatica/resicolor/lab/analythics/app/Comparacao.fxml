@@ -86,21 +86,29 @@
         </tabs>
       </TabPane>
       <ProgressIndicator fx:id="progReport" layoutX="570.0" layoutY="360.0" prefHeight="129.0" prefWidth="191.0" visible="false" />
-      <Rectangle fx:id="rect1" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="10.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
-      <Button fx:id="btPdf" layoutX="119.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveReport" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
+      <Rectangle fx:id="rectReport" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="400.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
+      <Button fx:id="btPdf" layoutX="509.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveReport" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btXls" layoutX="58.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveXls" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
+      <Button fx:id="btXls" layoutX="448.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveXls" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="22.0" layoutY="19.0" text="Relatórios" textFill="#09156f">
+      <Label layoutX="412.0" layoutY="19.0" text="Relatórios" textFill="#09156f">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Rectangle fx:id="rectProvas" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="14.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
+      <Label layoutX="28.0" layoutY="19.0" text="Provas:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblProva1" layoutX="105.0" layoutY="40.0" text="Prova1" textFill="#09156f" />
+      <Label fx:id="lblProva2" layoutX="105.0" layoutY="63.0" text="Prova2" textFill="#09156f" />
    </children>
 </AnchorPane>
