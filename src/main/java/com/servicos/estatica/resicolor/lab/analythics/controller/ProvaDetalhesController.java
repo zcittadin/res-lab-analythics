@@ -16,6 +16,7 @@ import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
@@ -165,11 +167,12 @@ public class ProvaDetalhesController implements Initializable {
 				temperatura);
 		Node mark = new HoverDataChart(1, temperatura);
 		mark.setVisible(chkMarcadores.isSelected());
+		mark.setStyle("-fx-background-color: red;");
 		valueMarks.add(mark);
 		data.setNode(mark);
 		tempSeries.getData().add(data);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private void configLineChart() {
 		yAxis.setAutoRanging(false);
