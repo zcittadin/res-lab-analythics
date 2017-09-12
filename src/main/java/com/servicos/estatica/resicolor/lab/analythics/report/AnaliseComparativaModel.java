@@ -11,12 +11,15 @@ public class AnaliseComparativaModel {
 	private String prova2;
 	private double temp1;
 	private double temp2;
+	private double sp1;
+	private double sp2;
 
 	public AnaliseComparativaModel() {
 
 	}
 
-	public AnaliseComparativaModel(Date intervalo, Date hora1, String prova1, Date hora2, String prova2, double temp1, double temp2) {
+	public AnaliseComparativaModel(Date intervalo, Date hora1, String prova1, Date hora2, String prova2, double temp1,
+			double temp2, double sp1, double sp2) {
 		this.intervalo = intervalo;
 		this.hora1 = hora1;
 		this.prova1 = prova1;
@@ -24,6 +27,8 @@ public class AnaliseComparativaModel {
 		this.prova2 = prova2;
 		this.temp1 = temp1;
 		this.temp2 = temp2;
+		this.sp1 = sp1;
+		this.sp2 = sp2;
 	}
 
 	public Date getIntervalo() {
@@ -37,7 +42,7 @@ public class AnaliseComparativaModel {
 	public Date getHora1() {
 		return hora1;
 	}
-	
+
 	public void setHora1(Date hora1) {
 		this.hora1 = hora1;
 	}
@@ -49,11 +54,11 @@ public class AnaliseComparativaModel {
 	public void setProva1(String prova1) {
 		this.prova1 = prova1;
 	}
-	
+
 	public Date getHora2() {
 		return hora2;
 	}
-	
+
 	public void setHora2(Date hora2) {
 		this.hora2 = hora2;
 	}
@@ -80,6 +85,22 @@ public class AnaliseComparativaModel {
 
 	public void setTemp2(double temp2) {
 		this.temp2 = temp2;
+	}
+
+	public double getSp1() {
+		return sp1;
+	}
+
+	public void setSp1(double sp1) {
+		this.sp1 = sp1;
+	}
+
+	public double getSp2() {
+		return sp2;
+	}
+
+	public void setSp2(double sp2) {
+		this.sp2 = sp2;
 	}
 
 }

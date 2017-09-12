@@ -45,13 +45,14 @@ public class AnaliseReportBuilder {
 
 	public static void buildComparative(Prova prova1, Prova prova2, String path) {
 		
-		TextColumnBuilder<Date> intervaloColumn = col.column("Horário", "intervalo", type.timeHourToSecondType());
 		TextColumnBuilder<Date> hora1Column = col.column("Horário", "hora1", type.timeHourToSecondType());
 		TextColumnBuilder<String> prova1Column = col.column("Prova", "prova1", type.stringType());
-		TextColumnBuilder<Double> temperatura1Column = col.column("Temperatura (ºC)", "temp1", type.doubleType());
+		TextColumnBuilder<Double> temperatura1Column = col.column("Temp. (ºC)", "temp1", type.doubleType());
+		TextColumnBuilder<Double> setPoint1Column = col.column("Set-point (ºC)", "sp1", type.doubleType());
 		TextColumnBuilder<Date> hora2Column = col.column("Horário", "hora2", type.timeHourToSecondType());
 		TextColumnBuilder<String> prova2Column = col.column("Prova", "prova2", type.stringType());
-		TextColumnBuilder<Double> temperatura2Column = col.column("Temperatura (ºC)", "temp2", type.doubleType());
+		TextColumnBuilder<Double> temperatura2Column = col.column("Temp. (ºC)", "temp2", type.doubleType());
+		TextColumnBuilder<Double> setPoint2Column = col.column("Set-point (ºC)", "sp2", type.doubleType());
 		
 		List<AnaliseComparativaModel> models = new ArrayList<>();
 		int sizeProva1 = prova1.getLeituras().size();
@@ -71,7 +72,9 @@ public class AnaliseReportBuilder {
 						i < sizeProva2 ? prova2.getLeituras().get(i).getDtProc() : null,
 						i < sizeProva2 ? prova2.getNomeProva() : "",
 						prova1.getLeituras().get(i).getTemp(),
-						i < sizeProva2 ? prova2.getLeituras().get(i).getTemp() : 0));
+						i < sizeProva2 ? prova2.getLeituras().get(i).getTemp() : 0,
+						prova1.getLeituras().get(i).getSp(),
+						i < sizeProva2 ? prova2.getLeituras().get(i).getSp() : 0));
 			}
 		} else {
 			Date inicio = prova2.getLeituras().get(0).getDtProc();
@@ -86,7 +89,9 @@ public class AnaliseReportBuilder {
 						prova2.getLeituras().get(i).getDtProc(),
 						prova2.getNomeProva(),
 						i < sizeProva1 ? prova1.getLeituras().get(i).getTemp() : 0,
-						prova2.getLeituras().get(i).getTemp()));
+						prova2.getLeituras().get(i).getTemp(),
+						i < sizeProva1 ? prova1.getLeituras().get(i).getSp() : 0,
+						prova2.getLeituras().get(i).getSp()));
 			}
 		}
 
@@ -102,7 +107,8 @@ public class AnaliseReportBuilder {
 							AnaliseComparativaReportTemplate.createChartComponent(models, prova1.getNomeProva(), prova2.getNomeProva()),
 							AnaliseComparativaReportTemplate.createSeparatorComponent())
 					.setDataSource(models)
-					.columns(prova1Column, hora1Column, temperatura1Column, prova2Column, hora2Column, temperatura2Column)
+					.columns(prova1Column, hora1Column, temperatura1Column, setPoint1Column, 
+							prova2Column, hora2Column, temperatura2Column, setPoint2Column)
 					.summary(AnaliseComparativaReportTemplate.createEmissaoComponent())
 					.toPdf(pdfExporter);
 		} catch (DRException e) {
