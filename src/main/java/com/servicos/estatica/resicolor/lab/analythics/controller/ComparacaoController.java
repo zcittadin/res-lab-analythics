@@ -26,6 +26,7 @@ import com.servicos.estatica.resicolor.lab.analythics.dao.LeituraDAO;
 import com.servicos.estatica.resicolor.lab.analythics.model.Amostra;
 import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
+import com.servicos.estatica.resicolor.lab.analythics.report.AmostrasReportBuilder;
 import com.servicos.estatica.resicolor.lab.analythics.report.AnaliseReportBuilder;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
@@ -55,8 +56,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.paint.Color;
 import javafx.scene.control.TableView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -745,7 +746,7 @@ public class ComparacaoController implements Initializable {
 
 	@SuppressWarnings("resource")
 	private void generateXlsReport(File file) {
-		initFetch();
+		fetch(true);
 		Task<Void> xlsTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -812,7 +813,7 @@ public class ComparacaoController implements Initializable {
 		xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				endFetch();
+				fetch(false);
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Concluído");
 				alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
@@ -829,7 +830,7 @@ public class ComparacaoController implements Initializable {
 		xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				endFetch();
+				fetch(false);
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erro");
 				alert.setHeaderText("Houve uma falha na geração do arquivo.");
@@ -856,7 +857,7 @@ public class ComparacaoController implements Initializable {
 	}
 
 	private void generatePdfReport(File file) {
-		initFetch();
+		fetch(true);
 		Task<Void> reportTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -876,7 +877,7 @@ public class ComparacaoController implements Initializable {
 		reportTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				endFetch();
+				fetch(false);
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Concluído");
 				alert.setHeaderText("Relatório emitido com sucesso. Deseja visualizar?");
@@ -894,7 +895,7 @@ public class ComparacaoController implements Initializable {
 		reportTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
 			@Override
 			public void handle(WorkerStateEvent event) {
-				endFetch();
+				fetch(false);
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erro");
 				alert.setHeaderText("Houve uma falha na emissão do relatório.");
@@ -905,22 +906,86 @@ public class ComparacaoController implements Initializable {
 		t.start();
 	}
 
-	private void initFetch() {
-		tblAmostras1.setDisable(true);
-		tblAmostras2.setDisable(true);
-		chartLeituras.setDisable(true);
-		btPdf.setDisable(true);
-		btXls.setDisable(true);
-		progReport.setVisible(true);
+	@FXML
+	private void saveReportAmostras() {
+		List<Amostra> amostras1;
+		List<Amostra> amostras2;
+		if (prova1 != null) {
+			amostras1 = amostraDAO.findAmostraByProva(prova1);
+			prova1.setAmostras(amostras1);
+		}
+		if (prova2 != null) {
+			amostras2 = amostraDAO.findAmostraByProva(prova2);
+			prova2.setAmostras(amostras2);
+		}
+		Stage stage = new Stage();
+		stage.initOwner(tblAmostras1.getScene().getWindow());
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
+		fileChooser.setTitle("Salvar relatório");
+		File savedFile = fileChooser.showSaveDialog(stage);
+		if (savedFile != null) {
+			generatePdfReportAmostras(savedFile);
+		}
 	}
 
-	private void endFetch() {
-		tblAmostras1.setDisable(false);
-		tblAmostras2.setDisable(false);
-		chartLeituras.setDisable(false);
-		btPdf.setDisable(false);
-		btXls.setDisable(false);
-		progReport.setVisible(false);
+	private void generatePdfReportAmostras(File file) {
+		fetch(true);
+		Task<Void> reportTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				if (prova1 != null && prova2 == null) {
+					AmostrasReportBuilder.buildSingle(prova1, file.getAbsolutePath());
+					return null;
+				}
+				if (prova2 != null && prova1 == null) {
+					AmostrasReportBuilder.buildSingle(prova2, file.getAbsolutePath());
+					return null;
+				}
+				// AnaliseReportBuilder.buildComparative(prova1, prova2,
+				// file.getAbsolutePath());
+				return null;
+			}
+		};
+
+		reportTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				fetch(false);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Concluído");
+				alert.setHeaderText("Relatório emitido com sucesso. Deseja visualizar?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
+		reportTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				fetch(false);
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erro");
+				alert.setHeaderText("Houve uma falha na emissão do relatório.");
+				alert.showAndWait();
+			}
+		});
+		Thread t = new Thread(reportTask);
+		t.start();
+	}
+
+	private void fetch(Boolean b) {
+		tblAmostras1.setDisable(b);
+		tblAmostras2.setDisable(b);
+		chartLeituras.setDisable(b);
+		btPdf.setDisable(b);
+		btXls.setDisable(b);
+		progReport.setVisible(b);
 	}
 
 }

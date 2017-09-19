@@ -100,3 +100,6 @@
 .btStyleTable {
   -fx-graphic: url('Table.png');
 }
+.btStyleBack {
+  -fx-graphic: url('back.png');
+}

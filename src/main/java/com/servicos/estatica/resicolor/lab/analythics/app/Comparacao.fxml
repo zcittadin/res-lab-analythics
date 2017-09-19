@@ -80,6 +80,11 @@
                               <TableColumn fx:id="colDescricao2" prefWidth="251.0" text="Descrição do processo" />
                            </columns>
                         </TableView>
+                        <Button fx:id="btPdfAmostras" layoutX="260.0" layoutY="22.0" mnemonicParsing="false" onAction="#saveReportAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF" visible="false">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children></AnchorPane>
             </content>
           </Tab>

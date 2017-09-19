@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "projetos")
 public class Projeto implements Serializable {
 
-	private static final long serialVersionUID = 4986109093612234663L;
+	private static final long serialVersionUID = 1990930300452155512L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +30,41 @@ public class Projeto implements Serializable {
 	private String nome;
 	@Column(name = "dt_criacao")
 	private Date dtCriacao;
+	@Column(name = "dt_final")
+	private Date dtFinal;
+	@Column(name = "teor_solidos")
+	private String teorSolidos;
+	@Column(name = "viscosidade")
+	private String viscosidade;
+	@Column(name = "cor_gardner")
+	private String corGardner;
+	@Column(name = "indice_acidez")
+	private String indiceAcidez;
+	@Column(name = "teor_oh")
+	private String teorOh;
+	@Column(name = "ph")
+	private String ph;
+	@Column(name = "dados_add")
+	private String dadosAdd;
 
 	public Projeto() {
 
 	}
 
-	public Projeto(Long id, List<Prova> provas, String nome, Date dtCriacao) {
+	public Projeto(Long id, List<Prova> provas, String nome, Date dtCriacao, Date dtFinal, String teorSolidos,
+			String viscosidade, String corGardner, String indiceAcidez, String teorOh, String ph, String dadosAdd) {
 		this.id = id;
 		this.provas = provas;
 		this.nome = nome;
 		this.dtCriacao = dtCriacao;
+		this.dtFinal = dtFinal;
+		this.teorSolidos = teorSolidos;
+		this.viscosidade = viscosidade;
+		this.corGardner = corGardner;
+		this.indiceAcidez = indiceAcidez;
+		this.teorOh = teorOh;
+		this.ph = ph;
+		this.dadosAdd = dadosAdd;
 	}
 
 	public Long getId() {
@@ -74,9 +99,76 @@ public class Projeto implements Serializable {
 		this.dtCriacao = dtCriacao;
 	}
 
+	public Date getDtFinal() {
+		return dtFinal;
+	}
+
+	public void setDtFinal(Date dtFinal) {
+		this.dtFinal = dtFinal;
+	}
+
+	public String getTeorSolidos() {
+		return teorSolidos;
+	}
+
+	public void setTeorSolidos(String teorSolidos) {
+		this.teorSolidos = teorSolidos;
+	}
+
+	public String getViscosidade() {
+		return viscosidade;
+	}
+
+	public void setViscosidade(String viscosidade) {
+		this.viscosidade = viscosidade;
+	}
+
+	public String getCorGardner() {
+		return corGardner;
+	}
+
+	public void setCorGardner(String corGardner) {
+		this.corGardner = corGardner;
+	}
+
+	public String getIndiceAcidez() {
+		return indiceAcidez;
+	}
+
+	public void setIndiceAcidez(String indiceAcidez) {
+		this.indiceAcidez = indiceAcidez;
+	}
+
+	public String getTeorOh() {
+		return teorOh;
+	}
+
+	public void setTeorOh(String teorOh) {
+		this.teorOh = teorOh;
+	}
+
+	public String getPh() {
+		return ph;
+	}
+
+	public void setPh(String ph) {
+		this.ph = ph;
+	}
+
+	public String getDadosAdd() {
+		return dadosAdd;
+	}
+
+	public void setDadosAdd(String dadosAdd) {
+		this.dadosAdd = dadosAdd;
+	}
+
 	@Override
 	public String toString() {
-		return "Projeto [id=" + id + ", provas=" + provas + ", nome=" + nome + ", dtCriacao=" + dtCriacao + "]";
+		return "Projeto [id=" + id + ", provas=" + provas + ", nome=" + nome + ", dtCriacao=" + dtCriacao + ", dtFinal="
+				+ dtFinal + ", teorSolidos=" + teorSolidos + ", viscosidade=" + viscosidade + ", corGardner="
+				+ corGardner + ", indiceAcidez=" + indiceAcidez + ", teorOh=" + teorOh + ", ph=" + ph + ", dadosAdd="
+				+ dadosAdd + "]";
 	}
 
 	@Override
