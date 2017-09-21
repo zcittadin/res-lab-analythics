@@ -24,7 +24,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="chartLeituras" animated="false" createSymbols="false" layoutY="44.0" legendVisible="false" prefHeight="508.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x tempo">
+                        <LineChart fx:id="chartLeituras" animated="false" createSymbols="false" layoutY="101.0" legendVisible="false" prefHeight="451.0" prefWidth="1258.0" stylesheets="@../style/style.css" title="Temperatura x tempo">
                           <xAxis>
                             <CategoryAxis animated="false" gapStartAndEnd="false" side="BOTTOM" tickLabelFill="#09156f" fx:id="xAxis">
                                  <tickLabelFont>
@@ -41,6 +41,22 @@
                           </yAxis>
                         </LineChart>
                         <CheckBox fx:id="chkMarcadores" layoutX="1121.0" layoutY="27.0" mnemonicParsing="false" onAction="#toggleMarks" text="Visualizar marcadores" textFill="#09156f" />
+                        <Rectangle fx:id="rectReportLeituras" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="88.0" layoutY="26.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
+                        <Button fx:id="btPdfLeituras" layoutX="197.0" layoutY="63.0" mnemonicParsing="false" onAction="#saveReportLeituras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btXlsLeituras" layoutX="136.0" layoutY="63.0" mnemonicParsing="false" onAction="#saveXlsLeituras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label layoutX="100.0" layoutY="34.0" text="Relatórios" textFill="#09156f">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -48,7 +64,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tblAmostras1" layoutX="16.0" layoutY="61.0" prefHeight="200.0" prefWidth="1252.0">
+                        <TableView fx:id="tblAmostras1" layoutX="16.0" layoutY="91.0" prefHeight="200.0" prefWidth="1252.0">
                           <columns>
                             <TableColumn fx:id="colHorario1" prefWidth="112.0" text="Horário" />
                             <TableColumn fx:id="colTemp1" prefWidth="67.0" text="°C" />
@@ -64,7 +80,7 @@
                               <TableColumn fx:id="colDescricao1" prefWidth="251.0" text="Descrição do processo" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="tblAmostras2" layoutX="16.0" layoutY="327.0" prefHeight="200.0" prefWidth="1252.0">
+                        <TableView fx:id="tblAmostras2" layoutX="16.0" layoutY="347.0" prefHeight="200.0" prefWidth="1252.0">
                            <columns>
                               <TableColumn fx:id="colHorario2" prefWidth="112.0" text="Horário" />
                               <TableColumn fx:id="colTemp2" prefWidth="67.0" text="°C" />
@@ -80,33 +96,38 @@
                               <TableColumn fx:id="colDescricao2" prefWidth="251.0" text="Descrição do processo" />
                            </columns>
                         </TableView>
-                        <Button fx:id="btPdfAmostras" layoutX="260.0" layoutY="22.0" mnemonicParsing="false" onAction="#saveReportAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF" visible="false">
+                        <Label fx:id="lblProvaAmostra1" alignment="CENTER" layoutX="623.0" layoutY="61.0" text="Prova1" textFill="#09156f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblProvaAmostra2" alignment="CENTER" layoutX="623.0" layoutY="317.0" text="Prova2" textFill="#09156f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fx:id="rectReportAmostras" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="16.0" layoutY="9.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
+                        <Button fx:id="btPdfAmostras" layoutX="125.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveReportAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
+                        <Button fx:id="btXlsAmostras" layoutX="64.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveXlsAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label layoutX="28.0" layoutY="17.0" text="Relatórios" textFill="#09156f">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
       <ProgressIndicator fx:id="progReport" layoutX="570.0" layoutY="360.0" prefHeight="129.0" prefWidth="191.0" visible="false" />
-      <Rectangle fx:id="rectReport" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="400.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
-      <Button fx:id="btPdf" layoutX="509.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveReport" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="btXls" layoutX="448.0" layoutY="48.0" mnemonicParsing="false" onAction="#saveXls" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Label layoutX="412.0" layoutY="19.0" text="Relatórios" textFill="#09156f">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
       <Rectangle fx:id="rectProvas" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="14.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
       <Label layoutX="28.0" layoutY="19.0" text="Provas:" textFill="#09156f">
          <font>

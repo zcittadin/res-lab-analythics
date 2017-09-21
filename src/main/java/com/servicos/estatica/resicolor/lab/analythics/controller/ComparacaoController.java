@@ -68,13 +68,19 @@ import javafx.util.Callback;
 public class ComparacaoController implements Initializable {
 
 	@FXML
-	private Rectangle rectReport;
+	private Rectangle rectReportLeituras;
+	@FXML
+	private Rectangle rectReportAmostras;
 	@FXML
 	private Rectangle rectProvas;
 	@FXML
 	private Label lblProva1;
 	@FXML
 	private Label lblProva2;
+	@FXML
+	private Label lblProvaAmostra1;
+	@FXML
+	private Label lblProvaAmostra2;
 	@FXML
 	private TabPane tabMain;
 	@FXML
@@ -138,9 +144,13 @@ public class ComparacaoController implements Initializable {
 	@FXML
 	private CheckBox chkMarcadores;
 	@FXML
-	private Button btXls;
+	private Button btXlsLeituras;
 	@FXML
-	private Button btPdf;
+	private Button btPdfLeituras;
+	@FXML
+	private Button btXlsAmostras;
+	@FXML
+	private Button btPdfAmostras;
 	@FXML
 	private ProgressIndicator progReport;
 
@@ -165,7 +175,8 @@ public class ComparacaoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		rectReport.setFill(Color.TRANSPARENT);
+		rectReportLeituras.setFill(Color.TRANSPARENT);
+		rectReportAmostras.setFill(Color.TRANSPARENT);
 		rectProvas.setFill(Color.TRANSPARENT);
 	}
 
@@ -173,27 +184,37 @@ public class ComparacaoController implements Initializable {
 		prova1 = pr1;
 		prova2 = pr2;
 		if (prova1 == null && prova2 == null) {
-			btXls.setDisable(true);
-			btPdf.setDisable(true);
+			btXlsLeituras.setDisable(true);
+			btPdfLeituras.setDisable(true);
+			btXlsAmostras.setDisable(true);
+			btPdfAmostras.setDisable(true);
 			lblProva1.setText("");
 			lblProva2.setText("");
+			lblProvaAmostra1.setText("");
+			lblProvaAmostra2.setText("");
 		}
 		configLineChart();
 		if (prova1 != null && prova2 != null) {
 			lblProva1.setText(prova1.getNomeProva());
 			lblProva2.setText(prova2.getNomeProva());
+			lblProvaAmostra1.setText(prova1.getNomeProva());
+			lblProvaAmostra2.setText(prova2.getNomeProva());
 			consultarComparative();
 			return;
 		}
 		if (prova1 != null) {
 			lblProva1.setText(prova1.getNomeProva());
 			lblProva2.setText("");
+			lblProvaAmostra1.setText(prova1.getNomeProva());
+			lblProvaAmostra2.setText("");
 			consultarSingle1();
 			return;
 		}
 		if (prova2 != null) {
 			lblProva1.setText(prova2.getNomeProva());
 			lblProva2.setText("");
+			lblProvaAmostra1.setText("");
+			lblProvaAmostra2.setText(prova2.getNomeProva());
 			consultarSingle2();
 			return;
 		}
@@ -732,20 +753,19 @@ public class ComparacaoController implements Initializable {
 	}
 
 	@FXML
-	public void saveXls() {
+	public void saveXlsLeituras() {
 		Stage stage = new Stage();
 		stage.initOwner(tblAmostras1.getScene().getWindow());
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("XLS Files", "*.xls"));
-		fileChooser.setTitle("Salvar planilha de processo");
+		fileChooser.setTitle("Salvar planilha de leituras");
 		File savedFile = fileChooser.showSaveDialog(stage);
 		if (savedFile != null) {
-			generateXlsReport(savedFile);
+			generateXlsLeituras(savedFile);
 		}
 	}
 
-	@SuppressWarnings("resource")
-	private void generateXlsReport(File file) {
+	private void generateXlsLeituras(File file) {
 		fetch(true);
 		Task<Void> xlsTask = new Task<Void>() {
 			@Override
@@ -802,6 +822,152 @@ public class ComparacaoController implements Initializable {
 					try {
 						fos.flush();
 						fos.close();
+						workbook.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				return null;
+			}
+		};
+		xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				fetch(false);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Concluído");
+				alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
+		xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent event) {
+				fetch(false);
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erro");
+				alert.setHeaderText("Houve uma falha na geração do arquivo.");
+				alert.showAndWait();
+			}
+		});
+		// progReport.progressProperty().bind(xlsTask.progressProperty());
+		new Thread(xlsTask).start();
+	}
+
+	@FXML
+	public void saveXlsAmostras() {
+		Stage stage = new Stage();
+		stage.initOwner(tblAmostras1.getScene().getWindow());
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("XLS Files", "*.xls"));
+		fileChooser.setTitle("Salvar planilha de amostras");
+		File savedFile = fileChooser.showSaveDialog(stage);
+		if (savedFile != null) {
+			generateXlsAmostras(savedFile);
+		}
+	}
+
+	private void generateXlsAmostras(File file) {
+		fetch(true);
+		Task<Void> xlsTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				int maximum = 20;
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				HSSFSheet firstSheet = workbook.createSheet("Aba1");
+				FileOutputStream fos = null;
+				try {
+					fos = new FileOutputStream(file);
+					int line = 0;
+					if (prova1 != null) {
+						HSSFRow headerRowA = firstSheet.createRow(line);
+						headerRowA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
+						line++;
+						HSSFRow titleRowA = firstSheet.createRow(line);
+						line++;
+						titleRowA.createCell(0).setCellValue("Horário");
+						titleRowA.createCell(1).setCellValue("Temperatura");
+						titleRowA.createCell(2).setCellValue("Set-point");
+						titleRowA.createCell(3).setCellValue("Índice de acidez");
+						titleRowA.createCell(4).setCellValue("Viscosidade");
+						titleRowA.createCell(5).setCellValue("Cor Gardner");
+						titleRowA.createCell(6).setCellValue("Percentual NV");
+						titleRowA.createCell(7).setCellValue("Gel time(seg)");
+						titleRowA.createCell(8).setCellValue("Água(ml)");
+						titleRowA.createCell(9).setCellValue("Amostra(g)");
+						titleRowA.createCell(10).setCellValue("PH");
+						titleRowA.createCell(11).setCellValue("Descrição do processo");
+						for (Amostra amostra : amostras1) {
+							HSSFRow rowA = firstSheet.createRow(line);
+							rowA.createCell(0).setCellValue(dataHoraSdf.format(amostra.getHorario()));
+							rowA.createCell(1).setCellValue(amostra.getTemp());
+							rowA.createCell(2).setCellValue(amostra.getSetPoint());
+							rowA.createCell(3).setCellValue(amostra.getIaSobreNv());
+							rowA.createCell(4).setCellValue(amostra.getViscGardner());
+							rowA.createCell(5).setCellValue(amostra.getCorGardner());
+							rowA.createCell(6).setCellValue(amostra.getPercentualNv());
+							rowA.createCell(7).setCellValue(amostra.getGelTime());
+							rowA.createCell(8).setCellValue(amostra.getAgua());
+							rowA.createCell(9).setCellValue(amostra.getAmostra());
+							rowA.createCell(10).setCellValue(amostra.getPh());
+							rowA.createCell(11).setCellValue(amostra.getDescricao());
+							line++;
+						}
+					}
+					if (prova2 != null) {
+						HSSFRow headerRowB = firstSheet.createRow(line);
+						headerRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
+						line++;
+						HSSFRow titleRowB = firstSheet.createRow(line);
+						line++;
+						titleRowB.createCell(0).setCellValue("Horário");
+						titleRowB.createCell(1).setCellValue("Temperatura");
+						titleRowB.createCell(2).setCellValue("Set-point");
+						titleRowB.createCell(3).setCellValue("Índice de acidez");
+						titleRowB.createCell(4).setCellValue("Viscosidade");
+						titleRowB.createCell(5).setCellValue("Cor Gardner");
+						titleRowB.createCell(6).setCellValue("Percentual NV");
+						titleRowB.createCell(7).setCellValue("Gel time(seg)");
+						titleRowB.createCell(8).setCellValue("Água(ml)");
+						titleRowB.createCell(9).setCellValue("Amostra(g)");
+						titleRowB.createCell(10).setCellValue("PH");
+						titleRowB.createCell(11).setCellValue("Descrição do processo");
+						for (Amostra amostra : amostras2) {
+							HSSFRow rowB = firstSheet.createRow(line);
+							rowB.createCell(0).setCellValue(dataHoraSdf.format(amostra.getHorario()));
+							rowB.createCell(1).setCellValue(amostra.getTemp());
+							rowB.createCell(2).setCellValue(amostra.getSetPoint());
+							rowB.createCell(3).setCellValue(amostra.getIaSobreNv());
+							rowB.createCell(4).setCellValue(amostra.getViscGardner());
+							rowB.createCell(5).setCellValue(amostra.getCorGardner());
+							rowB.createCell(6).setCellValue(amostra.getPercentualNv());
+							rowB.createCell(7).setCellValue(amostra.getGelTime());
+							rowB.createCell(8).setCellValue(amostra.getAgua());
+							rowB.createCell(9).setCellValue(amostra.getAmostra());
+							rowB.createCell(10).setCellValue(amostra.getPh());
+							rowB.createCell(11).setCellValue(amostra.getDescricao());
+							line++;
+						}
+					}
+					workbook.write(fos);
+					for (int i = 0; i < maximum; i++) {
+						updateProgress(i, maximum);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("Erro ao exportar arquivo");
+				} finally {
+					try {
+						fos.flush();
+						fos.close();
+						workbook.close();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -838,25 +1004,24 @@ public class ComparacaoController implements Initializable {
 			}
 		});
 		// progReport.progressProperty().bind(xlsTask.progressProperty());
-		Thread t = new Thread(xlsTask);
-		t.start();
+		new Thread(xlsTask).start();
 	}
 
 	@FXML
-	public void saveReport() {
+	public void saveReportLeituras() {
 		Stage stage = new Stage();
 		stage.initOwner(tblAmostras1.getScene().getWindow());
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
-		fileChooser.setTitle("Salvar relatório");
+		fileChooser.setTitle("Salvar relatório de leituras");
 		// fileChooser.setInitialFileName("lote_" + produto.getLote() + ".pdf");
 		File savedFile = fileChooser.showSaveDialog(stage);
 		if (savedFile != null) {
-			generatePdfReport(savedFile);
+			generatePdfReportLeituras(savedFile);
 		}
 	}
 
-	private void generatePdfReport(File file) {
+	private void generatePdfReportLeituras(File file) {
 		fetch(true);
 		Task<Void> reportTask = new Task<Void>() {
 			@Override
@@ -983,8 +1148,10 @@ public class ComparacaoController implements Initializable {
 		tblAmostras1.setDisable(b);
 		tblAmostras2.setDisable(b);
 		chartLeituras.setDisable(b);
-		btPdf.setDisable(b);
-		btXls.setDisable(b);
+		btPdfLeituras.setDisable(b);
+		btXlsLeituras.setDisable(b);
+		btPdfAmostras.setDisable(b);
+		btXlsAmostras.setDisable(b);
 		progReport.setVisible(b);
 	}
 
