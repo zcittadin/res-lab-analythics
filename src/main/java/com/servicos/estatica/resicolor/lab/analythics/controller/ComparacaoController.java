@@ -753,7 +753,7 @@ public class ComparacaoController implements Initializable {
 	}
 
 	@FXML
-	public void saveXlsLeituras() {
+	private void saveXlsLeituras() {
 		Stage stage = new Stage();
 		stage.initOwner(tblAmostras1.getScene().getWindow());
 		FileChooser fileChooser = new FileChooser();
@@ -862,7 +862,7 @@ public class ComparacaoController implements Initializable {
 	}
 
 	@FXML
-	public void saveXlsAmostras() {
+	private void saveXlsAmostras() {
 		Stage stage = new Stage();
 		stage.initOwner(tblAmostras1.getScene().getWindow());
 		FileChooser fileChooser = new FileChooser();
@@ -1008,7 +1008,7 @@ public class ComparacaoController implements Initializable {
 	}
 
 	@FXML
-	public void saveReportLeituras() {
+	private void saveReportLeituras() {
 		Stage stage = new Stage();
 		stage.initOwner(tblAmostras1.getScene().getWindow());
 		FileChooser fileChooser = new FileChooser();
@@ -1107,8 +1107,7 @@ public class ComparacaoController implements Initializable {
 					AmostrasReportBuilder.buildSingle(prova2, file.getAbsolutePath());
 					return null;
 				}
-				// AnaliseReportBuilder.buildComparative(prova1, prova2,
-				// file.getAbsolutePath());
+				AmostrasReportBuilder.buildComparative(prova1, prova2, file.getAbsolutePath());
 				return null;
 			}
 		};
