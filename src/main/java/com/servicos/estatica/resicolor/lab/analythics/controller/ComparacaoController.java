@@ -778,8 +778,11 @@ public class ComparacaoController implements Initializable {
 					fos = new FileOutputStream(file);
 					int line = 0;
 					if (prova1 != null) {
-						HSSFRow headerRowA = firstSheet.createRow(line);
-						headerRowA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
+						HSSFRow headerRowProjetoA = firstSheet.createRow(line);
+						headerRowProjetoA.createCell(0).setCellValue("Projeto " + prova1.getProjeto().getNome());
+						line++;
+						HSSFRow headerRowProvaA = firstSheet.createRow(line);
+						headerRowProvaA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
 						line++;
 						HSSFRow titleRowA = firstSheet.createRow(line);
 						line++;
@@ -795,8 +798,14 @@ public class ComparacaoController implements Initializable {
 						}
 					}
 					if (prova2 != null) {
-						HSSFRow headerRowB = firstSheet.createRow(line);
-						headerRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
+						HSSFRow blankRow = firstSheet.createRow(line);
+						blankRow.createCell(0).setCellValue("");
+						line++;
+						HSSFRow headerProjetoRowB = firstSheet.createRow(line);
+						headerProjetoRowB.createCell(0).setCellValue("Projeto " + prova2.getProjeto().getNome());
+						line++;
+						HSSFRow headerProvaRowB = firstSheet.createRow(line);
+						headerProvaRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
 						line++;
 						HSSFRow titleRowB = firstSheet.createRow(line);
 						line++;
@@ -887,8 +896,11 @@ public class ComparacaoController implements Initializable {
 					fos = new FileOutputStream(file);
 					int line = 0;
 					if (prova1 != null) {
-						HSSFRow headerRowA = firstSheet.createRow(line);
-						headerRowA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
+						HSSFRow headerRowProjetoA = firstSheet.createRow(line);
+						headerRowProjetoA.createCell(0).setCellValue("Projeto " + prova1.getProjeto().getNome());
+						line++;
+						HSSFRow headerRowProvaA = firstSheet.createRow(line);
+						headerRowProvaA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
 						line++;
 						HSSFRow titleRowA = firstSheet.createRow(line);
 						line++;
@@ -922,8 +934,14 @@ public class ComparacaoController implements Initializable {
 						}
 					}
 					if (prova2 != null) {
-						HSSFRow headerRowB = firstSheet.createRow(line);
-						headerRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
+						HSSFRow blankRow = firstSheet.createRow(line);
+						blankRow.createCell(0).setCellValue("");
+						line++;
+						HSSFRow headerProjetoRowB = firstSheet.createRow(line);
+						headerProjetoRowB.createCell(0).setCellValue("Projeto " + prova2.getProjeto().getNome());
+						line++;
+						HSSFRow headerProvaRowB = firstSheet.createRow(line);
+						headerProvaRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
 						line++;
 						HSSFRow titleRowB = firstSheet.createRow(line);
 						line++;
