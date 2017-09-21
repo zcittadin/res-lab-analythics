@@ -17,7 +17,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class App extends Application {
+public class ResAnalythics extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
