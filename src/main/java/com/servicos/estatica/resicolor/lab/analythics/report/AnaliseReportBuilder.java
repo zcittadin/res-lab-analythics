@@ -98,7 +98,7 @@ public class AnaliseReportBuilder {
 		try {
 			JasperPdfExporterBuilder pdfExporter = export.pdfExporter(path);
 			report().setTemplate(AnaliseComparativaReportTemplate.reportTemplate)
-					.title(AnaliseComparativaReportTemplate.createHeaderComponent(prova1, prova2),
+					.title(AnaliseComparativaReportTemplate.createHeaderComponent(),
 							AnaliseComparativaReportTemplate.createSeparatorComponent(),
 							AnaliseComparativaReportTemplate.createDadosComponent(prova1),
 							AnaliseComparativaReportTemplate.createSeparatorComponent(),

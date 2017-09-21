@@ -88,14 +88,13 @@ public class AmostrasReportTemplate {
 	}
 	
 	public static ComponentBuilder<?, ?> createHeaderComponent() {
-		return cmp.horizontalList().add(cmp.horizontalList(
-				cmp.image(AmostrasReportTemplate.class.getResource(
-						"/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png")).setFixedDimension(80, 80),
-				cmp.horizontalGap(10),
-				cmp.verticalList(
-						cmp.text("Relatório de amostras").setStyle(bold18CenteredStyle)
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
-				cmp.horizontalGap(10)));
+		return cmp.horizontalList(
+				cmp.image(AnaliseReportTemplate.class.getResource("/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png"))
+				.setFixedDimension(100, 100),
+				cmp.text("Relatório de análise de amostras").setStyle(bold22CenteredStyle)
+				.setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
+				cmp.horizontalGap(10)
+				);
 	}
 	
 	public static ComponentBuilder<?, ?> createDadosComponent(Prova prova) {

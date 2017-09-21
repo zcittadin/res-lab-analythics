@@ -85,22 +85,24 @@ public class AnaliseReportTemplate {
 	}
 
 	public static ComponentBuilder<?, ?> createHeaderComponent(Prova prova) {
-		return cmp.horizontalList().add(cmp.horizontalList(
-				cmp.image(AnaliseReportTemplate.class.getResource(
-						"/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png")).setFixedDimension(80, 80),
-				cmp.horizontalGap(10),
-				cmp.verticalList(
-						cmp.text("Relatório de ensaio laboratorial").setStyle(bold18CenteredStyle)
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300),
-						cmp.text("Projeto: " + prova.getProjeto().getNome()).setStyle(boldStyle.setFontSize(12))
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-						cmp.text("Prova: " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
-								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
-				cmp.horizontalGap(10)));
+		return cmp.horizontalList(
+				cmp.image(AnaliseReportTemplate.class.getResource("/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png"))
+				.setFixedDimension(100, 100),
+				cmp.text("Relatório de ensaio laboratorial").setStyle(bold22CenteredStyle)
+				.setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
+				cmp.horizontalGap(10)
+				);
 	}
 	
 	public static ComponentBuilder<?, ?> createDadosComponent(Prova prova) {
-		return cmp.horizontalList(
+		return cmp.verticalList(
+				cmp.horizontalList(
+						cmp.text("Projeto: " + prova.getProjeto().getNome()).setStyle(boldStyle.setFontSize(12))
+							.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)),
+						cmp.horizontalList(
+								cmp.text("Prova: " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
+								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)),
+				cmp.horizontalList(
 				cmp.verticalList(
 						cmp.text("Data de realização: " + dataSdf.format(prova.getDhInicial())),
 						cmp.text("Produto: " + prova.getProduto()),
@@ -112,7 +114,7 @@ public class AnaliseReportTemplate {
 				cmp.verticalList(
 						cmp.text("Executor: " + (prova.getExecutor())),
 						cmp.text("Temperatura mínima: " + EnsaioUtil.getTempMin(prova) + " ºC"),
-						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC")));
+						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"))));
 	}
 	
 	public static ComponentBuilder<?, ?> createSeparatorComponent() {

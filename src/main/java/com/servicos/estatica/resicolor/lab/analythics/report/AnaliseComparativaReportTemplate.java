@@ -85,32 +85,37 @@ public class AnaliseComparativaReportTemplate {
 		footerComponent = cmp.pageNumber().setStyle(stl.style(boldCenteredStyle).setTopBorder(stl.pen1Point()));
 	}
 
-	public static ComponentBuilder<?, ?> createHeaderComponent(Prova prova1, Prova prova2) {
-		return cmp.horizontalList().add(cmp.horizontalList(
-				cmp.image(AnaliseComparativaReportTemplate.class.getResource(
-						"/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png")).setFixedDimension(80, 80),
-				cmp.horizontalGap(10),
-				cmp.verticalList(cmp.text("Relatório comparativo").setStyle(bold18CenteredStyle)
-						.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setFixedWidth(300)),
-				cmp.horizontalGap(10)));
+	public static ComponentBuilder<?, ?> createHeaderComponent() {
+		return cmp.horizontalList(
+				cmp.image(AnaliseReportTemplate.class.getResource("/com/servicos/estatica/resicolor/lab/analythics/style/wtech.png"))
+				.setFixedDimension(100, 100),
+				cmp.text("Relatório de ensaio laboratorial (comparativo)").setStyle(bold22CenteredStyle)
+				.setHorizontalTextAlignment(HorizontalTextAlignment.CENTER),
+				cmp.horizontalGap(10)
+				);
 	}
 	
 	public static ComponentBuilder<?, ?> createDadosComponent(Prova prova) {
-		return cmp.horizontalList(
+		return cmp.verticalList(
+				cmp.horizontalList(
+						cmp.text("Projeto: " + prova.getProjeto().getNome()).setStyle(boldStyle.setFontSize(12))
+							.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)),
+						cmp.horizontalList(
+								cmp.text("Prova: " + prova.getNomeProva()).setStyle(boldStyle.setFontSize(12))
+								.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)),
+				cmp.horizontalList(
 				cmp.verticalList(
-						cmp.text("Projeto " + prova.getProjeto().getNome()),
-						cmp.text("Prova: " + prova.getNomeProva()),
+						cmp.text("Data de realização: " + dataSdf.format(prova.getDhInicial())),
 						cmp.text("Produto: " + prova.getProduto()),
-						cmp.text("Data de realização: " + dataSdf.format(prova.getDhInicial()))),
-				cmp.verticalList(cmp.text("Balão: " + prova.getBalao()),
+						cmp.text("Balão: " + prova.getBalao())),
+				cmp.verticalList(
 						cmp.text("Horário de início: " + horasSdf.format(prova.getDhInicial())),
 						cmp.text("Horário de encerramento: " + horasSdf.format(prova.getDhFinal())),
 						cmp.text("Tempo decorrido: " + EnsaioUtil.formatPeriod(prova.getDhInicial(), prova.getDhFinal()))),
-				cmp.verticalList(cmp.text(""),
+				cmp.verticalList(
+						cmp.text("Executor: " + (prova.getExecutor())),
 						cmp.text("Temperatura mínima: " + EnsaioUtil.getTempMin(prova) + " ºC"),
-						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"),
-//						cmp.text("Set-point: " + produto.getProcessos().get(0).getSpReator() + " ºC"),
-						cmp.text("Executor: " + prova.getExecutor())));
+						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"))));
 	}
 	
 	public static ComponentBuilder<?, ?> createChartComponent(List<AnaliseComparativaModel> models, String prova1, String prova2) {
