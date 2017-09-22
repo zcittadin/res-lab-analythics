@@ -54,8 +54,8 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <ProgressIndicator fx:id="progDados" layoutX="199.0" layoutY="80.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #00BFFF;" visible="false" />
-      <ProgressIndicator fx:id="progTable" layoutX="512.0" layoutY="393.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+      <ProgressIndicator fx:id="progDados" layoutX="199.0" layoutY="80.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
+      <ProgressIndicator fx:id="progTable" layoutX="512.0" layoutY="393.0" prefHeight="116.0" prefWidth="207.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
       <Line endX="508.0" layoutX="676.0" layoutY="61.0" startX="-100.0" stroke="#09156f" strokeWidth="2.0" />
       <Line endY="76.0" layoutX="880.0" layoutY="163.0" startY="-100.0" stroke="#09156f" strokeWidth="2.0" />
       <RadioButton fx:id="rdProva1" layoutX="589.0" layoutY="72.0" mnemonicParsing="false" selected="true" textFill="#09156f" />

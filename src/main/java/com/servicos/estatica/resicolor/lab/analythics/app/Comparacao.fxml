@@ -127,7 +127,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <ProgressIndicator fx:id="progReport" layoutX="570.0" layoutY="360.0" prefHeight="129.0" prefWidth="191.0" visible="false" />
+      <ProgressIndicator fx:id="progReport" layoutX="560.0" layoutY="370.0" prefHeight="129.0" prefWidth="191.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
       <Rectangle fx:id="rectProvas" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="14.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
       <Label layoutX="28.0" layoutY="19.0" text="Provas:" textFill="#09156f">
          <font>

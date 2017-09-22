@@ -44,7 +44,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ProgressIndicator fx:id="progAndamento" layoutX="563.0" layoutY="139.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #00BFFF;" visible="false" />
-      <ProgressIndicator fx:id="progRecentes" layoutX="560.0" layoutY="454.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #00BFFF;" visible="false" />
+      <ProgressIndicator fx:id="progAndamento" layoutX="563.0" layoutY="139.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
+      <ProgressIndicator fx:id="progRecentes" layoutX="560.0" layoutY="454.0" prefHeight="86.0" prefWidth="89.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
    </children>
 </AnchorPane>
