@@ -41,6 +41,11 @@
     -fx-stroke: rgba(0.0,255.0,126.0,0.0);
 }
 
+.text-area .content { 
+	-fx-background-color: #E1F5FE;
+	-fx-text-fill: #09156f;
+}
+
 .btStyleAdd {
   -fx-graphic: url('add.png');
 }

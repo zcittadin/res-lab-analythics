@@ -60,12 +60,12 @@
       <Line endY="76.0" layoutX="880.0" layoutY="163.0" startY="-100.0" stroke="#09156f" strokeWidth="2.0" />
       <RadioButton fx:id="rdProva1" layoutX="589.0" layoutY="72.0" mnemonicParsing="false" selected="true" textFill="#09156f" />
       <RadioButton fx:id="rdProva2" layoutX="894.0" layoutY="72.0" mnemonicParsing="false" textFill="#09156f" />
-      <TextField fx:id="txtComparaProva1" editable="false" layoutX="589.0" layoutY="117.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
-      <TextField fx:id="txtComparaProjeto1" editable="false" layoutX="589.0" layoutY="173.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <TextField fx:id="txtComparaProva1" editable="false" layoutX="589.0" layoutY="117.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #E1F5FE;" />
+      <TextField fx:id="txtComparaProjeto1" editable="false" layoutX="589.0" layoutY="173.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #E1F5FE;" />
       <Label layoutX="589.0" layoutY="99.0" text="Nome da prova:" textFill="#09156f" />
       <Label layoutX="589.0" layoutY="157.0" text="Nome do projeto" textFill="#09156f" />
-      <TextField fx:id="txtComparaProva2" editable="false" layoutX="894.0" layoutY="117.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
-      <TextField fx:id="txtComparaProjeto2" editable="false" layoutX="894.0" layoutY="173.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #87CEFA;" />
+      <TextField fx:id="txtComparaProva2" editable="false" layoutX="894.0" layoutY="117.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #E1F5FE;" />
+      <TextField fx:id="txtComparaProjeto2" editable="false" layoutX="894.0" layoutY="173.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #E1F5FE;" />
       <Label layoutX="894.0" layoutY="99.0" text="Nome da prova:" textFill="#09156f" />
       <Label layoutX="894.0" layoutY="157.0" text="Nome do projeto" textFill="#09156f" />
       <Button fx:id="btSearch1" layoutX="1079.0" layoutY="27.0" mnemonicParsing="false" onAction="#analise" prefHeight="25.0" prefWidth="92.0" styleClass="btStyleEye" stylesheets="@../style/style.css" text="Analisar">

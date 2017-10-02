@@ -57,6 +57,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -78,11 +79,35 @@ public class ComparacaoController implements Initializable {
 	@FXML
 	private Label lblProva1;
 	@FXML
+	private Label lblTeorSolidos1;
+	@FXML
+	private Label lblViscosidade1;
+	@FXML
+	private Label lblCorGardner1;
+	@FXML
+	private Label lblIndiceAcid1;
+	@FXML
+	private Label lblTeorOh1;
+	@FXML
+	private Label lblPh1;
+	@FXML
 	private Label lblProva2;
 	@FXML
-	private Label lblProvaAmostra1;
+	private Label lblTeorSolidos2;
 	@FXML
-	private Label lblProvaAmostra2;
+	private Label lblViscosidade2;
+	@FXML
+	private Label lblCorGardner2;
+	@FXML
+	private Label lblIndiceAcid2;
+	@FXML
+	private Label lblTeorOh2;
+	@FXML
+	private Label lblPh2;
+	@FXML
+	private TextArea txtAdicionais1;
+	@FXML
+	private TextArea txtAdicionais2;
 	@FXML
 	private TabPane tabMain;
 	@FXML
@@ -193,32 +218,80 @@ public class ComparacaoController implements Initializable {
 			btXlsAmostras.setDisable(true);
 			btPdfAmostras.setDisable(true);
 			lblProva1.setText("");
+			lblCorGardner1.setText("");
+			lblIndiceAcid1.setText("");
+			lblPh1.setText("");
+			lblTeorOh1.setText("");
+			lblTeorSolidos1.setText("");
+			lblViscosidade1.setText("");
+			txtAdicionais1.setText("");
 			lblProva2.setText("");
-			lblProvaAmostra1.setText("");
-			lblProvaAmostra2.setText("");
+			lblCorGardner2.setText("");
+			lblIndiceAcid2.setText("");
+			lblPh2.setText("");
+			lblTeorOh2.setText("");
+			lblTeorSolidos2.setText("");
+			lblViscosidade2.setText("");
+			txtAdicionais2.setText("");
 		}
 		configLineChart();
 		if (prova1 != null && prova2 != null) {
 			lblProva1.setText(prova1.getNomeProva());
+			lblCorGardner1.setText(prova1.getProjeto().getCorGardner());
+			lblIndiceAcid1.setText(prova1.getProjeto().getIndiceAcidez());
+			lblPh1.setText(prova1.getProjeto().getPh());
+			lblTeorOh1.setText(prova1.getProjeto().getTeorOh());
+			lblTeorSolidos1.setText(prova1.getProjeto().getTeorSolidos());
+			lblViscosidade1.setText(prova1.getProjeto().getViscosidade());
+			txtAdicionais1.setText(prova1.getProjeto().getDadosAdd());
 			lblProva2.setText(prova2.getNomeProva());
-			lblProvaAmostra1.setText(prova1.getNomeProva());
-			lblProvaAmostra2.setText(prova2.getNomeProva());
+			lblCorGardner2.setText(prova2.getProjeto().getCorGardner());
+			lblIndiceAcid2.setText(prova2.getProjeto().getIndiceAcidez());
+			lblPh2.setText(prova2.getProjeto().getPh());
+			lblTeorOh2.setText(prova2.getProjeto().getTeorOh());
+			lblTeorSolidos2.setText(prova2.getProjeto().getTeorSolidos());
+			lblViscosidade2.setText(prova2.getProjeto().getViscosidade());
+			txtAdicionais2.setText(prova2.getProjeto().getDadosAdd());
 			consultarComparative();
 			return;
 		}
 		if (prova1 != null) {
 			lblProva1.setText(prova1.getNomeProva());
+			lblCorGardner1.setText(prova1.getProjeto().getCorGardner());
+			lblIndiceAcid1.setText(prova1.getProjeto().getIndiceAcidez());
+			lblPh1.setText(prova1.getProjeto().getPh());
+			lblTeorOh1.setText(prova1.getProjeto().getTeorOh());
+			lblTeorSolidos1.setText(prova1.getProjeto().getTeorSolidos());
+			lblViscosidade1.setText(prova1.getProjeto().getViscosidade());
+			txtAdicionais1.setText(prova1.getProjeto().getDadosAdd());
 			lblProva2.setText("");
-			lblProvaAmostra1.setText(prova1.getNomeProva());
-			lblProvaAmostra2.setText("");
+			lblCorGardner2.setText("");
+			lblIndiceAcid2.setText("");
+			lblPh2.setText("");
+			lblTeorOh2.setText("");
+			lblTeorSolidos2.setText("");
+			lblViscosidade2.setText("");
+			txtAdicionais2.setText("");
 			consultarSingle1();
 			return;
 		}
 		if (prova2 != null) {
-			lblProva1.setText(prova2.getNomeProva());
-			lblProva2.setText("");
-			lblProvaAmostra1.setText("");
-			lblProvaAmostra2.setText(prova2.getNomeProva());
+			lblProva2.setText(prova2.getNomeProva());
+			lblCorGardner2.setText(prova2.getProjeto().getCorGardner());
+			lblIndiceAcid2.setText(prova2.getProjeto().getIndiceAcidez());
+			lblPh2.setText(prova2.getProjeto().getPh());
+			lblTeorOh2.setText(prova2.getProjeto().getTeorOh());
+			lblTeorSolidos2.setText(prova2.getProjeto().getTeorSolidos());
+			lblViscosidade2.setText(prova2.getProjeto().getViscosidade());
+			txtAdicionais2.setText(prova2.getProjeto().getDadosAdd());
+			lblProva1.setText("");
+			lblCorGardner1.setText("");
+			lblIndiceAcid1.setText("");
+			lblPh1.setText("");
+			lblTeorOh1.setText("");
+			lblTeorSolidos1.setText("");
+			lblViscosidade1.setText("");
+			txtAdicionais1.setText("");
 			consultarSingle2();
 			return;
 		}
