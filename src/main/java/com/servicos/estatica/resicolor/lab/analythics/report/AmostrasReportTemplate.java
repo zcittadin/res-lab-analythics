@@ -117,7 +117,21 @@ public class AmostrasReportTemplate {
 				cmp.verticalList(
 						cmp.text("Executor: " + (prova.getExecutor())),
 						cmp.text("Temperatura mínima: " + EnsaioUtil.getTempMin(prova) + " ºC"),
-						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"))));
+						cmp.text("Temperatura máxima: " + EnsaioUtil.getTempMax(prova) + " ºC"))),
+				
+				cmp.horizontalList(
+						cmp.text("Dados de entrada").setStyle(boldStyle.setFontSize(12))
+						.setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)),
+				cmp.horizontalList(
+						cmp.verticalList(
+								cmp.text("Teor sólidos: " + prova.getProjeto().getTeorSolidos()),
+								cmp.text("Viscosidade: " + prova.getProjeto().getViscosidade()),
+								cmp.text("Cor Gardner: " + prova.getProjeto().getCorGardner())),
+						cmp.verticalList(
+								cmp.text("Índice de acidez: " + prova.getProjeto().getIndiceAcidez()),
+								cmp.text("Teor OH: " + prova.getProjeto().getTeorOh()),
+								cmp.text("PH: " + prova.getProjeto().getPh())),
+						cmp.verticalList(cmp.text("Dados adicionais: " + prova.getProjeto().getDadosAdd()))));
 	}
 	
 	public static ComponentBuilder<?, ?> createSeparatorComponent() {
