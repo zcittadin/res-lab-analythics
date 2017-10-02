@@ -72,7 +72,9 @@ public class ComparacaoController implements Initializable {
 	@FXML
 	private Rectangle rectReportAmostras;
 	@FXML
-	private Rectangle rectProvas;
+	private Rectangle rectProvas1;
+	@FXML
+	private Rectangle rectProvas2;
 	@FXML
 	private Label lblProva1;
 	@FXML
@@ -177,7 +179,9 @@ public class ComparacaoController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		rectReportLeituras.setFill(Color.TRANSPARENT);
 		rectReportAmostras.setFill(Color.TRANSPARENT);
-		rectProvas.setFill(Color.TRANSPARENT);
+		rectProvas1.setFill(Color.TRANSPARENT);
+		rectProvas1.setFill(Color.TRANSPARENT);
+		rectProvas2.setFill(Color.TRANSPARENT);
 	}
 
 	public void setContext(Prova pr1, Prova pr2) {

@@ -20,6 +20,71 @@
    <children>
       <TabPane fx:id="tabMain" layoutX="9.0" layoutY="94.0" prefHeight="596.0" prefWidth="1283.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
+          <Tab text="Análise de amostras">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tblAmostras1" layoutX="16.0" layoutY="91.0" prefHeight="200.0" prefWidth="1252.0">
+                          <columns>
+                            <TableColumn fx:id="colHorario1" prefWidth="112.0" text="Horário" />
+                            <TableColumn fx:id="colTemp1" prefWidth="67.0" text="°C" />
+                              <TableColumn fx:id="colSetPoint1" prefWidth="93.0" text="Set-point" />
+                              <TableColumn fx:id="colIAsobreNV1" prefWidth="109.0" text="Índice de acidez" />
+                              <TableColumn fx:id="colViscGardner1" prefWidth="112.0" text="Viscosidade" />
+                              <TableColumn fx:id="colCorGardner1" prefWidth="89.0" text="Cor Gardner" />
+                              <TableColumn fx:id="colNv1" prefWidth="74.0" text="NV%" />
+                              <TableColumn fx:id="colGelTime1" prefWidth="95.0" text="Gel time (seg)" />
+                              <TableColumn fx:id="colAgua1" prefWidth="92.0" text="Água (ml)" />
+                              <TableColumn fx:id="colAmostra1" prefWidth="91.0" text="Amostra (g)" />
+                              <TableColumn fx:id="colPh1" prefWidth="66.0" text="PH" />
+                              <TableColumn fx:id="colDescricao1" prefWidth="251.0" text="Descrição do processo" />
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="tblAmostras2" layoutX="16.0" layoutY="347.0" prefHeight="200.0" prefWidth="1252.0">
+                           <columns>
+                              <TableColumn fx:id="colHorario2" prefWidth="112.0" text="Horário" />
+                              <TableColumn fx:id="colTemp2" prefWidth="67.0" text="°C" />
+                              <TableColumn fx:id="colSetPoint2" prefWidth="93.0" text="Set-point" />
+                              <TableColumn fx:id="colIAsobreNV2" prefWidth="109.0" text="Índice de acidez" />
+                              <TableColumn fx:id="colViscGardner2" prefWidth="112.0" text="Viscosidade" />
+                              <TableColumn fx:id="colCorGardner2" prefWidth="89.0" text="Cor Gardner" />
+                              <TableColumn fx:id="colNv2" prefWidth="74.0" text="NV%" />
+                              <TableColumn fx:id="colGelTime2" prefWidth="95.0" text="Gel time (seg)" />
+                              <TableColumn fx:id="colAgua2" prefWidth="92.0" text="Água (ml)" />
+                              <TableColumn fx:id="colAmostra2" prefWidth="91.0" text="Amostra (g)" />
+                              <TableColumn fx:id="colPh2" prefWidth="66.0" text="PH" />
+                              <TableColumn fx:id="colDescricao2" prefWidth="251.0" text="Descrição do processo" />
+                           </columns>
+                        </TableView>
+                        <Label fx:id="lblProvaAmostra1" alignment="CENTER" layoutX="623.0" layoutY="61.0" text="Prova1" textFill="#09156f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblProvaAmostra2" alignment="CENTER" layoutX="623.0" layoutY="317.0" text="Prova2" textFill="#09156f">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fx:id="rectReportAmostras" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="16.0" layoutY="9.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
+                        <Button fx:id="btPdfAmostras" layoutX="125.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveReportAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btXlsAmostras" layoutX="64.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveXlsAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Label layoutX="28.0" layoutY="17.0" text="Relatórios" textFill="#09156f">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
           <Tab text="Projeção de leituras">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -60,81 +125,92 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Análise de amostras">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tblAmostras1" layoutX="16.0" layoutY="91.0" prefHeight="200.0" prefWidth="1252.0">
-                          <columns>
-                            <TableColumn fx:id="colHorario1" prefWidth="112.0" text="Horário" />
-                            <TableColumn fx:id="colTemp1" prefWidth="67.0" text="°C" />
-                              <TableColumn fx:id="colSetPoint1" prefWidth="93.0" text="Set-point" />
-                              <TableColumn fx:id="colIAsobreNV1" prefWidth="109.0" text="IA sobre NV" />
-                              <TableColumn fx:id="colViscGardner1" prefWidth="112.0" text="Visc. Gardner" />
-                              <TableColumn fx:id="colCorGardner1" prefWidth="89.0" text="Cor Gardner" />
-                              <TableColumn fx:id="colNv1" prefWidth="74.0" text="NV%" />
-                              <TableColumn fx:id="colGelTime1" prefWidth="95.0" text="Gel time (seg)" />
-                              <TableColumn fx:id="colAgua1" prefWidth="92.0" text="Água (ml)" />
-                              <TableColumn fx:id="colAmostra1" prefWidth="91.0" text="Amostra (g)" />
-                              <TableColumn fx:id="colPh1" prefWidth="66.0" text="PH" />
-                              <TableColumn fx:id="colDescricao1" prefWidth="251.0" text="Descrição do processo" />
-                          </columns>
-                        </TableView>
-                        <TableView fx:id="tblAmostras2" layoutX="16.0" layoutY="347.0" prefHeight="200.0" prefWidth="1252.0">
-                           <columns>
-                              <TableColumn fx:id="colHorario2" prefWidth="112.0" text="Horário" />
-                              <TableColumn fx:id="colTemp2" prefWidth="67.0" text="°C" />
-                              <TableColumn fx:id="colSetPoint2" prefWidth="93.0" text="Set-point" />
-                              <TableColumn fx:id="colIAsobreNV2" prefWidth="109.0" text="IA sobre NV" />
-                              <TableColumn fx:id="colViscGardner2" prefWidth="112.0" text="Visc. Gardner" />
-                              <TableColumn fx:id="colCorGardner2" prefWidth="89.0" text="Cor Gardner" />
-                              <TableColumn fx:id="colNv2" prefWidth="74.0" text="NV%" />
-                              <TableColumn fx:id="colGelTime2" prefWidth="95.0" text="Gel time (seg)" />
-                              <TableColumn fx:id="colAgua2" prefWidth="92.0" text="Água (ml)" />
-                              <TableColumn fx:id="colAmostra2" prefWidth="91.0" text="Amostra (g)" />
-                              <TableColumn fx:id="colPh2" prefWidth="66.0" text="PH" />
-                              <TableColumn fx:id="colDescricao2" prefWidth="251.0" text="Descrição do processo" />
-                           </columns>
-                        </TableView>
-                        <Label fx:id="lblProvaAmostra1" alignment="CENTER" layoutX="623.0" layoutY="61.0" text="Prova1" textFill="#09156f">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblProvaAmostra2" alignment="CENTER" layoutX="623.0" layoutY="317.0" text="Prova2" textFill="#09156f">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Rectangle fx:id="rectReportAmostras" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="16.0" layoutY="9.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
-                        <Button fx:id="btPdfAmostras" layoutX="125.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveReportAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleReport" stylesheets="@../style/style.css" text="PDF">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="btXlsAmostras" layoutX="64.0" layoutY="46.0" mnemonicParsing="false" onAction="#saveXlsAmostras" prefHeight="25.0" prefWidth="61.0" styleClass="btStyleTable" stylesheets="@../style/style.css" text="XLS">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Label layoutX="28.0" layoutY="17.0" text="Relatórios" textFill="#09156f">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
         </tabs>
       </TabPane>
-      <ProgressIndicator fx:id="progReport" layoutX="560.0" layoutY="370.0" prefHeight="129.0" prefWidth="191.0" style="-fx-progress-color: #E0FFFF;" visible="false" />
-      <Rectangle fx:id="rectProvas" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="14.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="218.0" />
-      <Label layoutX="28.0" layoutY="19.0" text="Provas:" textFill="#09156f">
+      <ProgressIndicator fx:id="progReport" layoutX="560.0" layoutY="329.0" prefHeight="129.0" prefWidth="191.0" style="-fx-progress-color: #64b5f6;" visible="false" />
+      <Rectangle fx:id="rectProvas1" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="14.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="625.0" />
+      <Label layoutX="28.0" layoutY="19.0" text="Prova:" textFill="#09156f">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblProva1" layoutX="105.0" layoutY="40.0" text="Prova1" textFill="#09156f" />
-      <Label fx:id="lblProva2" layoutX="105.0" layoutY="63.0" text="Prova2" textFill="#09156f" />
+      <Label fx:id="lblProva1" layoutX="74.0" layoutY="19.0" text="Prova1" textFill="#09156f" />
+      <Label layoutX="28.0" layoutY="39.0" text="Teor sólidos:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="28.0" layoutY="59.0" text="Viscosidade:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="200.0" layoutY="39.0" text="Cor Gardnder:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="200.0" layoutY="59.0" text="Índice acid:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="39.0" text="Teor OH:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="59.0" text="PH:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="460.0" layoutY="19.0" text="Dados adicionais:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Rectangle fx:id="rectProvas2" arcHeight="25.0" arcWidth="25.0" fill="#3fd1e8" height="76.0" layoutX="654.0" layoutY="11.0" stroke="#09156f" strokeType="INSIDE" strokeWidth="2.0" width="625.0" />
+      <Label layoutX="668.0" layoutY="19.0" text="Prova:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblProva2" layoutX="714.0" layoutY="19.0" text="Prova2" textFill="#09156f" />
+      <Label layoutX="668.0" layoutY="39.0" text="Teor sólidos:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="668.0" layoutY="59.0" text="Viscosidade:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="840.0" layoutY="39.0" text="Cor Gardnder:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="840.0" layoutY="59.0" text="Índice acid:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="990.0" layoutY="39.0" text="Teor OH:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="990.0" layoutY="59.0" text="PH:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="1100.0" layoutY="19.0" text="Dados adicionais:" textFill="#09156f">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
