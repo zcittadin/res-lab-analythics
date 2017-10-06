@@ -28,6 +28,7 @@ import com.servicos.estatica.resicolor.lab.analythics.model.Leitura;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
 import com.servicos.estatica.resicolor.lab.analythics.report.AmostrasReportBuilder;
 import com.servicos.estatica.resicolor.lab.analythics.report.AnaliseReportBuilder;
+import com.servicos.estatica.resicolor.lab.analythics.report.xls.XlsGenerator;
 import com.servicos.estatica.resicolor.lab.analythics.util.HoverDataChart;
 
 import javafx.application.Platform;
@@ -956,150 +957,39 @@ public class ComparacaoController implements Initializable {
 		fileChooser.setTitle("Salvar planilha de amostras");
 		File savedFile = fileChooser.showSaveDialog(stage);
 		if (savedFile != null) {
-			generateXlsAmostras(savedFile);
+			fetch(true);
+			XlsGenerator generator = new XlsGenerator();
+			Task<Void> xlsTask = generator.generate(savedFile, prova1, prova2, amostras1, amostras2);
+			Thread t = new Thread(xlsTask);
+			t.start();
+			xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent arg0) {
+					fetch(false);
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setTitle("Concluído");
+					alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
+					Optional<ButtonType> result = alert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+						try {
+							Desktop.getDesktop().open(savedFile);
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
+			});
+			xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
+				@Override
+				public void handle(WorkerStateEvent event) {
+					fetch(false);
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Erro");
+					alert.setHeaderText("Houve uma falha na geração do arquivo.");
+					alert.showAndWait();
+				}
+			});
 		}
-	}
-
-	private void generateXlsAmostras(File file) {
-		fetch(true);
-		Task<Void> xlsTask = new Task<Void>() {
-			@Override
-			protected Void call() throws Exception {
-				int maximum = 20;
-				HSSFWorkbook workbook = new HSSFWorkbook();
-				HSSFSheet firstSheet = workbook.createSheet("Aba1");
-				FileOutputStream fos = null;
-				try {
-					fos = new FileOutputStream(file);
-					int line = 0;
-					if (prova1 != null) {
-						HSSFRow headerRowProjetoA = firstSheet.createRow(line);
-						headerRowProjetoA.createCell(0).setCellValue("Projeto " + prova1.getProjeto().getNome());
-						line++;
-						HSSFRow headerRowProvaA = firstSheet.createRow(line);
-						headerRowProvaA.createCell(0).setCellValue("Prova " + prova1.getNomeProva());
-						line++;
-						HSSFRow titleRowA = firstSheet.createRow(line);
-						line++;
-						titleRowA.createCell(0).setCellValue("Horário");
-						titleRowA.createCell(1).setCellValue("Temperatura");
-						titleRowA.createCell(2).setCellValue("Set-point");
-						titleRowA.createCell(3).setCellValue("Índice de acidez");
-						titleRowA.createCell(4).setCellValue("Viscosidade");
-						titleRowA.createCell(5).setCellValue("Cor Gardner");
-						titleRowA.createCell(6).setCellValue("Percentual NV");
-						titleRowA.createCell(7).setCellValue("Gel time(seg)");
-						titleRowA.createCell(8).setCellValue("Água(ml)");
-						titleRowA.createCell(9).setCellValue("Amostra(g)");
-						titleRowA.createCell(10).setCellValue("PH");
-						titleRowA.createCell(11).setCellValue("Descrição do processo");
-						for (Amostra amostra : amostras1) {
-							HSSFRow rowA = firstSheet.createRow(line);
-							rowA.createCell(0).setCellValue(dataHoraSdf.format(amostra.getHorario()));
-							rowA.createCell(1).setCellValue(amostra.getTemp());
-							rowA.createCell(2).setCellValue(amostra.getSetPoint());
-							rowA.createCell(3).setCellValue(amostra.getIaSobreNv());
-							rowA.createCell(4).setCellValue(amostra.getViscGardner());
-							rowA.createCell(5).setCellValue(amostra.getCorGardner());
-							rowA.createCell(6).setCellValue(amostra.getPercentualNv());
-							rowA.createCell(7).setCellValue(amostra.getGelTime());
-							rowA.createCell(8).setCellValue(amostra.getAgua());
-							rowA.createCell(9).setCellValue(amostra.getAmostra());
-							rowA.createCell(10).setCellValue(amostra.getPh());
-							rowA.createCell(11).setCellValue(amostra.getDescricao());
-							line++;
-						}
-					}
-					if (prova2 != null) {
-						HSSFRow blankRow = firstSheet.createRow(line);
-						blankRow.createCell(0).setCellValue("");
-						line++;
-						HSSFRow headerProjetoRowB = firstSheet.createRow(line);
-						headerProjetoRowB.createCell(0).setCellValue("Projeto " + prova2.getProjeto().getNome());
-						line++;
-						HSSFRow headerProvaRowB = firstSheet.createRow(line);
-						headerProvaRowB.createCell(0).setCellValue("Prova " + prova2.getNomeProva());
-						line++;
-						HSSFRow titleRowB = firstSheet.createRow(line);
-						line++;
-						titleRowB.createCell(0).setCellValue("Horário");
-						titleRowB.createCell(1).setCellValue("Temperatura");
-						titleRowB.createCell(2).setCellValue("Set-point");
-						titleRowB.createCell(3).setCellValue("Índice de acidez");
-						titleRowB.createCell(4).setCellValue("Viscosidade");
-						titleRowB.createCell(5).setCellValue("Cor Gardner");
-						titleRowB.createCell(6).setCellValue("Percentual NV");
-						titleRowB.createCell(7).setCellValue("Gel time(seg)");
-						titleRowB.createCell(8).setCellValue("Água(ml)");
-						titleRowB.createCell(9).setCellValue("Amostra(g)");
-						titleRowB.createCell(10).setCellValue("PH");
-						titleRowB.createCell(11).setCellValue("Descrição do processo");
-						for (Amostra amostra : amostras2) {
-							HSSFRow rowB = firstSheet.createRow(line);
-							rowB.createCell(0).setCellValue(dataHoraSdf.format(amostra.getHorario()));
-							rowB.createCell(1).setCellValue(amostra.getTemp());
-							rowB.createCell(2).setCellValue(amostra.getSetPoint());
-							rowB.createCell(3).setCellValue(amostra.getIaSobreNv());
-							rowB.createCell(4).setCellValue(amostra.getViscGardner());
-							rowB.createCell(5).setCellValue(amostra.getCorGardner());
-							rowB.createCell(6).setCellValue(amostra.getPercentualNv());
-							rowB.createCell(7).setCellValue(amostra.getGelTime());
-							rowB.createCell(8).setCellValue(amostra.getAgua());
-							rowB.createCell(9).setCellValue(amostra.getAmostra());
-							rowB.createCell(10).setCellValue(amostra.getPh());
-							rowB.createCell(11).setCellValue(amostra.getDescricao());
-							line++;
-						}
-					}
-					workbook.write(fos);
-					for (int i = 0; i < maximum; i++) {
-						updateProgress(i, maximum);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("Erro ao exportar arquivo");
-				} finally {
-					try {
-						fos.flush();
-						fos.close();
-						workbook.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				return null;
-			}
-		};
-
-		xlsTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				fetch(false);
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Concluído");
-				alert.setHeaderText("Planilha de dados emitida com sucesso. Deseja visualizar?");
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-					try {
-						Desktop.getDesktop().open(file);
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
-		});
-		xlsTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
-			@Override
-			public void handle(WorkerStateEvent event) {
-				fetch(false);
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Erro");
-				alert.setHeaderText("Houve uma falha na geração do arquivo.");
-				alert.showAndWait();
-			}
-		});
-		// progReport.progressProperty().bind(xlsTask.progressProperty());
-		new Thread(xlsTask).start();
 	}
 
 	@FXML
