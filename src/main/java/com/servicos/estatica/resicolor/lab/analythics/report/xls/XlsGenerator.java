@@ -7,6 +7,14 @@ import java.text.SimpleDateFormat;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import com.servicos.estatica.resicolor.lab.analythics.model.Amostra;
 import com.servicos.estatica.resicolor.lab.analythics.model.Prova;
@@ -96,11 +104,14 @@ public class XlsGenerator {
 							rowIndexer.createCell(11).setCellValue(amostra.getDescricao());
 							line++;
 						}
+						line++;
 					}
-					line++;
 					if (prova2 != null) {
 						rowIndexer = firstSheet.createRow(line);
-						rowIndexer.createCell(0).setCellValue("");
+						CellStyle cellStyle = workbook.createCellStyle();
+						cellStyle.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
+						cellStyle.setFillPattern(FillPatternType.BIG_SPOTS);
+						rowIndexer.setRowStyle(cellStyle);
 						line++;
 						rowIndexer = firstSheet.createRow(line);
 						rowIndexer.createCell(0).setCellValue("");
