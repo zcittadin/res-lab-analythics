@@ -20,6 +20,9 @@ import java.util.ResourceBundle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 import com.servicos.estatica.resicolor.lab.analythics.dao.AmostraDAO;
 import com.servicos.estatica.resicolor.lab.analythics.dao.LeituraDAO;
@@ -877,7 +880,11 @@ public class ComparacaoController implements Initializable {
 					}
 					if (prova2 != null) {
 						HSSFRow blankRow = firstSheet.createRow(line);
-						blankRow.createCell(0).setCellValue("");
+						blankRow = firstSheet.createRow(line);
+						CellStyle cellStyle = workbook.createCellStyle();
+						cellStyle.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
+						cellStyle.setFillPattern(FillPatternType.BIG_SPOTS);
+						blankRow.setRowStyle(cellStyle);
 						line++;
 						HSSFRow headerProjetoRowB = firstSheet.createRow(line);
 						headerProjetoRowB.createCell(0).setCellValue("Projeto " + prova2.getProjeto().getNome());
