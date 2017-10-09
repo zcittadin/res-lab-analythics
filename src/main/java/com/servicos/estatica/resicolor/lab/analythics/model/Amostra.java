@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "amostras")
 public class Amostra implements Serializable {
 
-	private static final long serialVersionUID = -7402849524350630270L;
+	private static final long serialVersionUID = -6718261142450948429L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class Amostra implements Serializable {
 	@Column(name = "percentual_nv")
 	private double percentualNv;
 	@Column(name = "gel_time")
-	private int gelTime;
+	private String gelTime;
 	@Column(name = "agua")
 	private double agua;
 	@Column(name = "amostra")
@@ -56,7 +56,7 @@ public class Amostra implements Serializable {
 	}
 
 	public Amostra(Long id, Prova provaAmostras, Date horario, double temp, double setPoint, double iaSobreNv,
-			String viscGardner, String corGardner, double percentualNv, int gelTime, double agua, double amostra,
+			String viscGardner, String corGardner, double percentualNv, String gelTime, double agua, double amostra,
 			double ph, String descricao) {
 		this.id = id;
 		this.provaAmostras = provaAmostras;
@@ -146,11 +146,11 @@ public class Amostra implements Serializable {
 		this.percentualNv = percentualNv;
 	}
 
-	public int getGelTime() {
+	public String getGelTime() {
 		return gelTime;
 	}
 
-	public void setGelTime(int gelTime) {
+	public void setGelTime(String gelTime) {
 		this.gelTime = gelTime;
 	}
 

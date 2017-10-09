@@ -33,7 +33,7 @@ public class AmostrasReportBuilder {
 	private static TextColumnBuilder<String> viscGardnerColumn = col.column("Viscosidade", "viscGardner", type.stringType());
 	private static TextColumnBuilder<String> corGardnerColumn = col.column("Cor Gardner", "corGardner", type.stringType());
 	private static TextColumnBuilder<Double> percNvColumn = col.column("% NV", "percentualNv", type.doubleType());
-	private static TextColumnBuilder<Integer> gelTimeColumn = col.column("Gel-time", "gelTime", type.integerType());
+	private static TextColumnBuilder<String> gelTimeColumn = col.column("Gel-time", "gelTime", type.stringType());
 	private static TextColumnBuilder<Double> aguaColumn = col.column("Água(ml)", "agua", type.doubleType());
 	private static TextColumnBuilder<Double> amostraColumn = col.column("Amostra(g)", "amostra", type.doubleType());
 	private static TextColumnBuilder<Double> phColumn = col.column("PH", "ph", type.doubleType());

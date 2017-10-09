@@ -639,10 +639,10 @@ public class ComparacaoController implements Initializable {
 					}
 				});
 		colGelTime1.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Amostra, Integer>, ObservableValue<Integer>>() {
-					public ObservableValue<Integer> call(CellDataFeatures<Amostra, Integer> cell) {
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
 						final Amostra a = cell.getValue();
-						final SimpleObjectProperty<Integer> simpleObject = new SimpleObjectProperty<Integer>(
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
 								a.getGelTime());
 						return simpleObject;
 					}
@@ -764,10 +764,10 @@ public class ComparacaoController implements Initializable {
 					}
 				});
 		colGelTime2.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Amostra, Integer>, ObservableValue<Integer>>() {
-					public ObservableValue<Integer> call(CellDataFeatures<Amostra, Integer> cell) {
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
 						final Amostra a = cell.getValue();
-						final SimpleObjectProperty<Integer> simpleObject = new SimpleObjectProperty<Integer>(
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
 								a.getGelTime());
 						return simpleObject;
 					}

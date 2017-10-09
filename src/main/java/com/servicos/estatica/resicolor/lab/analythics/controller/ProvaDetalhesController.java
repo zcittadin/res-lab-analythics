@@ -170,7 +170,7 @@ public class ProvaDetalhesController implements Initializable {
 		data.setNode(mark);
 		tempSeries.getData().add(data);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void configLineChart() {
 		yAxis.setAutoRanging(false);
@@ -251,10 +251,10 @@ public class ProvaDetalhesController implements Initializable {
 					}
 				});
 		colGelTime.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Amostra, Integer>, ObservableValue<Integer>>() {
-					public ObservableValue<Integer> call(CellDataFeatures<Amostra, Integer> cell) {
+				new Callback<TableColumn.CellDataFeatures<Amostra, String>, ObservableValue<String>>() {
+					public ObservableValue<String> call(CellDataFeatures<Amostra, String> cell) {
 						final Amostra a = cell.getValue();
-						final SimpleObjectProperty<Integer> simpleObject = new SimpleObjectProperty<Integer>(
+						final SimpleObjectProperty<String> simpleObject = new SimpleObjectProperty<String>(
 								a.getGelTime());
 						return simpleObject;
 					}
