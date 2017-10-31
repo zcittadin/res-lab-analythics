@@ -76,6 +76,8 @@ public class InicialController implements Initializable, ControlledScreen {
 	private ProgressIndicator progAndamento;
 	@FXML
 	private ProgressIndicator progRecentes;
+	@FXML
+	private Button btRefresh;
 
 	private static ObservableList<Prova> provasAndamento = FXCollections.observableArrayList();
 	private static ObservableList<Prova> provasRecentes = FXCollections.observableArrayList();
@@ -95,10 +97,17 @@ public class InicialController implements Initializable, ControlledScreen {
 		findRecentes();
 	}
 
+	@FXML
+	private void refreshTables() {
+		findAndamento();
+		findRecentes();
+	}
+
 	private void findAndamento() {
 		tblAndamento.getItems().clear();
 		progAndamento.setVisible(true);
 		tblAndamento.setDisable(true);
+		btRefresh.setDisable(true);
 		Task<Void> searchTask = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
@@ -115,6 +124,7 @@ public class InicialController implements Initializable, ControlledScreen {
 				}
 				progAndamento.setVisible(false);
 				tblAndamento.setDisable(false);
+				btRefresh.setDisable(false);
 			}
 
 		});
@@ -317,8 +327,8 @@ public class InicialController implements Initializable, ControlledScreen {
 											Stage stage;
 											Parent root;
 											stage = new Stage();
-											URL url = getClass()
-													.getResource("/com/servicos/estatica/resicolor/lab/analythics/app/ProvaDetalhes.fxml");
+											URL url = getClass().getResource(
+													"/com/servicos/estatica/resicolor/lab/analythics/app/ProvaDetalhes.fxml");
 											FXMLLoader fxmlloader = new FXMLLoader();
 											fxmlloader.setLocation(url);
 											fxmlloader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -328,8 +338,8 @@ public class InicialController implements Initializable, ControlledScreen {
 											stage.initModality(Modality.APPLICATION_MODAL);
 											stage.initOwner(tblAndamento.getScene().getWindow());
 											stage.setResizable(Boolean.FALSE);
-											 ((ProvaDetalhesController) fxmlloader.getController())
-											 .setContext(getTableView().getItems().get(getIndex()));
+											((ProvaDetalhesController) fxmlloader.getController())
+													.setContext(getTableView().getItems().get(getIndex()));
 											stage.showAndWait();
 										} catch (IOException e) {
 											System.err.println("Erro ao carregar FXML!");

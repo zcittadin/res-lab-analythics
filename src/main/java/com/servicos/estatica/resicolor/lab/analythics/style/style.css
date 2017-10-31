@@ -108,3 +108,6 @@
 .btStyleBack {
   -fx-graphic: url('back.png');
 }
+.btStyleRefresh {
+  -fx-graphic: url('Refresh.png');
+}
